@@ -1,12 +1,16 @@
-import './App.css';
 import Header from "./Header/header";
 import FoodList from "./food-list/FoodList";
+import {database} from "./database/db";
+
+
+
 
 function App() {
+    console.log('render App')
     return (
         <div className="App">
             <Header/>
-            <FoodList/>
+            <FoodList data={database.products}/>
         </div>
     );
 }

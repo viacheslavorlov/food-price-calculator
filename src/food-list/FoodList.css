@@ -3,3 +3,6 @@
     display: flex;
     margin: 0 auto;
 }
+.product_list__elements {
+    display: flex;
+}
