@@ -5,35 +5,35 @@ export const database = {
       "metric": "шт",
       "price": 100,
       "pack": 10,
-      "amount": 2
+      "amount": 0
     },
     {
       "name": "молоко",
       "metric": "мл",
       "price": 80,
       "pack": 900,
-      "amount": 350
+      "amount": 0
     },
     {
       "name": "мука",
       "metric": "г",
       "price": 120,
       "pack": 2000,
-      "amount": 220
+      "amount": 0
     },
     {
       "name": "соль",
       "metric": "г",
       "price": 120,
       "pack": 500,
-      "amount": 1
+      "amount": 0
     },
     {
       "name": "сахар",
       "metric": "г",
       "price": 120,
       "pack": 1000,
-      "amount": 10
+      "amount": 0
     }
   ],
   "package": [
