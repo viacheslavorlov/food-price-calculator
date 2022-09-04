@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {stashData} from "../../services/localStorageDB";
+import {stashDataSession, stashDataStorage} from "../../services/localStorageDB";
 
-const AddNewItem = () => {
+const AddNewItem = ({setProductList}) => {
 	const [newItem, setNewItem] = useState({
 		name: '',
 		metric: '',
@@ -20,9 +20,17 @@ const AddNewItem = () => {
 		e.preventDefault();
 		if(newItem.name !== '' && newItem.pack !== 0 && newItem.price !== 0 && newItem.metric !== '') {
 			const oldList = JSON.parse(localStorage.getItem('products'));
-			// console.log(oldList);
+			if (oldList.findIndex(item => item.name === newItem.name) !== -1) {
+				alert('Такой продукт уже существует в списке!');
+				setNewItem({name: '', metric: '', price: 0, pack: 0, amount: 0});
+				return;
+			}
 			oldList.push(newItem);
-			stashData(JSON.stringify(oldList));
+			setProductList(oldList);
+			stashDataSession(JSON.stringify(oldList));
+			stashDataStorage(JSON.stringify(oldList));
+			alert(`Добавлен новый продукт: ${newItem.name}`);
+			setNewItem({name: '', metric: '', price: 0, pack: 0, amount: 0});
 		}
 	}
 	
