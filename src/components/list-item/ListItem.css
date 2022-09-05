@@ -1,0 +1,21 @@
+.product_list__element {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    padding: 5px;
+    border-bottom: 2px solid black;
+}
+
+.product_list__element__inputs {
+    margin: 4px;
+}
+
+.product_list__element__buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product_list__element__buttons__button {
+    border: 1px solid black;
+    border-radius: 5px;
+}

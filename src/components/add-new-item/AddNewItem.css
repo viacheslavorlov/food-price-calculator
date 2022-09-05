@@ -1,12 +1,12 @@
-.product_list {
+.add-new-item {
     width: 80vw;
-    margin: 10px auto;
+    margin: 0 auto;
     border: 1px solid black;
     border-radius: 20px; padding: 15px;
     background: rgba(176, 241, 219, 0.55);
 }
 
-.product_list__elements {
+.add-new-item__form {
     display: flex;
     flex-direction: column;
 }

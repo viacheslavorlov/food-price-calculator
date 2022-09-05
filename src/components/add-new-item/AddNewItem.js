@@ -1,3 +1,5 @@
+import "./AddNewItem.css";
+
 import React, {useState} from "react";
 import {stashDataSession, stashDataStorage} from "../../services/localStorageDB";
 
@@ -35,20 +37,28 @@ const AddNewItem = ({setProductList}) => {
 	}
 	
 	return (
-		<div>
-			<h2>Добавить новый продукт:</h2>
-			<form>
-				<div>Название продукта:</div>
-				<input type="text" value={newItem.name} name="name" onChange={(e) => setNewItemValue(e)}/>
-				<div>Единицы измерения:</div>
-				<input type="text" value={newItem.metric} name="metric" onChange={(e) => setNewItemValue(e)}/>
-				<div>Количество в одной пачке:</div>
-				<input type="number" value={newItem.pack} name="pack" onChange={(e) => setNewItemValue(e)}/>
-				<div>Цена за пачку:</div>
-				<input type="number" value={newItem.price} name="price" onChange={(e) => setNewItemValue(e)}/>
+		<div className={"add-new-item"}>
+			<h2 className={"add-new-item__header"}>Добавить новый продукт:</h2>
+			<form className={"add-new-item__form"}>
+				<div className={"add-new-item__form__item"}>Название продукта: <br/>
+					<input type="text" value={newItem.name} name="name" onChange={(e) => setNewItemValue(e)}/>
+				</div>
+				
+				<div className={"add-new-item__form__item"}>Единицы измерения: <br/>
+					<input type="text" value={newItem.metric} name="metric" onChange={(e) => setNewItemValue(e)}/>
+				</div>
+				
+				<div  className={"add-new-item__form__item"}>Количество в одной пачке: <br/>
+					<input type="number" value={newItem.pack} name="pack" onChange={(e) => setNewItemValue(e)}/>
+				</div>
+				
+				<div  className={"add-new-item__form__item"}>Цена за пачку: <br/>
+					<input type="number" value={newItem.price} name="price" onChange={(e) => setNewItemValue(e)}/>
+				</div>
+				
 				<br/>
 				<br/>
-				<button onClick={addItemToLocalStorage}>Добавить продукт</button>
+				<button className={"add-new-item__form__button"} onClick={addItemToLocalStorage}>Добавить продукт</button>
 			</form>
 		</div>
 	);

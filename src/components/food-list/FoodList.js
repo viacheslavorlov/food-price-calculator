@@ -1,3 +1,4 @@
+import "./FoodList.css";
 import {useEffect, useState} from "react";
 import {stashDataSession, stashDataStorage} from "../../services/localStorageDB";
 import ListElement from "../list-item/ListItem";
@@ -34,7 +35,7 @@ const FoodList = ({data}) => {
 	const deleteItem = (e) => {
 		const newArr = productList.filter(item => item.name !== e.target.name);
 		setProductList(() => newArr);
-		stashDataSession(newArr);
+		stashDataSession(JSON.stringify(newArr));
 	};
 	
 	const deleteItemFromStorage = (e) => {

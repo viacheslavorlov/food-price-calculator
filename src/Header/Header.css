@@ -1,4 +1,4 @@
-.product_list {
+.header {
     width: 80vw;
     margin: 10px auto;
     border: 1px solid black;
@@ -6,7 +6,7 @@
     background: rgba(176, 241, 219, 0.55);
 }
 
-.product_list__elements {
-    display: flex;
-    flex-direction: column;
+.header__name {
+    margin: 0 auto;
+    text-align: center;
 }
