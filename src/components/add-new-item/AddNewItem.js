@@ -13,9 +13,11 @@ const AddNewItem = ({setProductList}) => {
 	});
 	
 	const setNewItemValue = (e) => {
-		setNewItem(newItem => ({
-		...newItem, [e.target.name]: e.target.value
-		}));
+		if (e.target.value >= 0 || e.target.value) {
+			setNewItem(newItem => ({
+				...newItem, [e.target.name]: e.target.value
+			}));
+		}
 	}
 	
 	const addItemToLocalStorage = (e) => {
@@ -35,6 +37,7 @@ const AddNewItem = ({setProductList}) => {
 			setNewItem({name: '', metric: '', price: 0, pack: 0, amount: 0});
 		}
 	}
+	console.log('new item render');
 	
 	return (
 		<div className={"add-new-item"}>

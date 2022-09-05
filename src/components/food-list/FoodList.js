@@ -9,21 +9,20 @@ const FoodList = ({data}) => {
 		.parse(localStorage.getItem("products")) || data);
 	const [amount, setAmount] = useState(0);
 	
-	// const setAmountValue = (e) => {
-	//
-	// };
 	
 	const changeAmount = (e, property) => {
-		setAmount(amount => e.target.value);
-		let indexOfChangedItem = productList.findIndex(item => item.name === e.target.name);
-		const newItem = [...productList].filter(item => item.name === e.target.name);
-		newItem[0] = {...newItem[0], [property]: e.target.value};
-		
-		const oldItemsBefore = [...productList].filter((item, i) => i < indexOfChangedItem);
-		const oldItemsAfter = [...productList].filter((item, i) => i > indexOfChangedItem);
-		
-		setProductList(list => [...oldItemsBefore, newItem[0], ...oldItemsAfter]);
-		stashDataSession(JSON.stringify(productList));
+		if(e.target.value >= 0) {
+			setAmount(amount => e.target.value);
+			let indexOfChangedItem = productList.findIndex(item => item.name === e.target.name);
+			const newItem = [...productList].filter(item => item.name === e.target.name);
+			newItem[0] = {...newItem[0], [property]: e.target.value};
+			
+			const oldItemsBefore = [...productList].filter((item, i) => i < indexOfChangedItem);
+			const oldItemsAfter = [...productList].filter((item, i) => i > indexOfChangedItem);
+			
+			setProductList(list => [...oldItemsBefore, newItem[0], ...oldItemsAfter]);
+			stashDataSession(JSON.stringify(productList));
+		}
 	};
 	
 	const clearAmount = (arr) => {
@@ -45,7 +44,7 @@ const FoodList = ({data}) => {
 	
 	useEffect(() => {
 		stashDataSession(JSON.stringify(productList));
-	}, []);
+	}, [productList, amount]);
 	
 	const calculatePriceOfProduct = (price, amount, pack) => {
 		return Math.ceil(price * (amount / pack));
@@ -58,9 +57,9 @@ const FoodList = ({data}) => {
 		                    calulatePriceOfProduct={calculatePriceOfProduct}
 		                    deleteItem={deleteItem}
 		                    deleteItemFromStorage={deleteItemFromStorage}
-		                    />;
+		/>;
 	});
-	
+	console.log("foodlist render");
 	return (
 		<>
 			<AddNewItem setProductList={setProductList}/>

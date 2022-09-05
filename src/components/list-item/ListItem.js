@@ -6,6 +6,7 @@ const ListElement = ({changeAmount, item, calulatePriceOfProduct, deleteItem, de
 		<li className="product_list__element">
 			<div className={"product_list__element__inputs"}>{item.name}, в упаковке: <span className="span">_</span>
 				<input type="number"
+				       min={0}
 				       name={item.name}
 					   value={item.pack}
 					   onChange={(e) => {
@@ -29,7 +30,7 @@ const ListElement = ({changeAmount, item, calulatePriceOfProduct, deleteItem, de
 					type="number"
 					value={item.price}
 					onChange={(e) => {
-						changeAmount(e, "price");
+							changeAmount(e, "price");
 					}}
 					name={item.name}/>
 			</div>
