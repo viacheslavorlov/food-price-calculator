@@ -18,11 +18,12 @@ const AddNewItem = ({setProductList}) => {
 		}));
 	}
 	
-	const addItemToLocalStorage = (e) => {
+	const addItemToLocalStorage = async (e) => {
 		e.preventDefault();
 		if(newItem.name !== '' && newItem.pack !== 0 && newItem.price !== 0 && newItem.metric !== '') {
-			const oldList = JSON.parse(localStorage.getItem('products'));
-			if (oldList.findIndex(item => item.name === newItem.name) !== -1) {
+			const oldList = await JSON.parse(localStorage.getItem('products'));
+			console.log(oldList);
+			if (oldList.findIndex(item => item.name === newItem.name) > -1) {
 				alert('Такой продукт уже существует в списке!');
 				setNewItem({name: '', metric: '', price: 0, pack: 0, amount: 0});
 				return;

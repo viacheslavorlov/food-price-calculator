@@ -9,10 +9,6 @@ const FoodList = ({data}) => {
 		.parse(localStorage.getItem("products")) || data);
 	const [amount, setAmount] = useState(0);
 	
-	// const setAmountValue = (e) => {
-	//
-	// };
-	
 	const changeAmount = (e, property) => {
 		setAmount(amount => e.target.value);
 		let indexOfChangedItem = productList.findIndex(item => item.name === e.target.name);
@@ -34,18 +30,20 @@ const FoodList = ({data}) => {
 	
 	const deleteItem = (e) => {
 		const newArr = productList.filter(item => item.name !== e.target.name);
-		setProductList(() => newArr);
+		setProductList(productList => newArr);
 		stashDataSession(JSON.stringify(newArr));
 	};
 	
 	const deleteItemFromStorage = (e) => {
-		deleteItem(e);
-		stashDataStorage(JSON.stringify(productList));
+		const newArr = productList.filter(item => item.name !== e.target.name);
+		setProductList(productList => newArr);
+		stashDataSession(JSON.stringify(newArr));
+		stashDataStorage(JSON.stringify(newArr));
 	};
 	
 	useEffect(() => {
 		stashDataSession(JSON.stringify(productList));
-	}, []);
+	}, [productList]);
 	
 	const calculatePriceOfProduct = (price, amount, pack) => {
 		return Math.ceil(price * (amount / pack));
@@ -63,7 +61,7 @@ const FoodList = ({data}) => {
 	
 	return (
 		<>
-			<AddNewItem setProductList={setProductList}/>
+			<AddNewItem setProductList={setProductList} productList={productList}/>
 			<div className="product_list">
 				<h2 className="product_list__heading">Список продуктов</h2>
 				<ul className="product_list__elements">
