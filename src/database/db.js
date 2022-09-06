@@ -5,35 +5,35 @@ export const database = {
       "metric": "шт",
       "price": 100,
       "pack": 10,
-      "amount": 0
+      "amount": ""
     },
     {
       "name": "молоко",
       "metric": "мл",
       "price": 80,
       "pack": 900,
-      "amount": 0
+      "amount": ""
     },
     {
       "name": "мука",
       "metric": "г",
       "price": 120,
       "pack": 2000,
-      "amount": 0
+      "amount": ""
     },
     {
       "name": "соль",
       "metric": "г",
       "price": 120,
       "pack": 500,
-      "amount": 0
+      "amount": ""
     },
     {
       "name": "сахар",
       "metric": "г",
       "price": 120,
       "pack": 1000,
-      "amount": 0
+      "amount": ""
     }
   ],
   "package": [
@@ -41,13 +41,13 @@ export const database = {
       "name": "коробка",
       "metric": "10x20",
       "price": 20,
-      "amount": 0
+      "amount": ""
     },
     {
       "name": "коробка2",
       "metric": "20x30",
       "price": 30,
-      "amount": 0
+      "amount": ""
     }
   ]
 }

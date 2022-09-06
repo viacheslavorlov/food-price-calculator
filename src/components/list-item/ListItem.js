@@ -4,7 +4,7 @@ const ListElement = ({changeAmount, item, calulatePriceOfProduct, deleteItem, de
 	
 	return (
 		<li className="product_list__element">
-			<div className={"product_list__element__inputs"}>{item.name}, в упаковке: <span className="span">_</span>
+			<div className={"product_list__element__inputs"}><b>{item.name.toUpperCase()}</b>, в упаковке: <span className="span">_</span>
 				<input type="number"
 				       name={item.name}
 					   value={item.pack}

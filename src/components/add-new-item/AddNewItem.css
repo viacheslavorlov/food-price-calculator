@@ -1,6 +1,6 @@
 .add-new-item {
     width: 80vw;
-    margin: 0 auto;
+    margin: 10px;
     border: 1px solid black;
     border-radius: 20px; padding: 15px;
     background: rgba(176, 241, 219, 0.55);

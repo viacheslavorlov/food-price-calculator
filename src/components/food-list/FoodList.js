@@ -6,7 +6,7 @@ import AddNewItem from "../add-new-item/AddNewItem";
 
 const FoodList = ({data}) => {
 	const [productList, setProductList] = useState(JSON
-		.parse(localStorage.getItem("products")) || data);
+		.parse(sessionStorage.getItem("products") || localStorage.getItem("products")) || data);
 	const [amount, setAmount] = useState(0);
 	
 	const changeAmount = (e, property) => {
@@ -19,30 +19,34 @@ const FoodList = ({data}) => {
 		const oldItemsAfter = [...productList].filter((item, i) => i > indexOfChangedItem);
 		
 		setProductList(list => [...oldItemsBefore, newItem[0], ...oldItemsAfter]);
-		stashDataSession(JSON.stringify(productList));
+		stashDataSession("products", productList);
 	};
 	
 	const clearAmount = (arr) => {
 		setProductList(() => arr.map(item => ({...item, amount: 0})));
 		setAmount(0);
-		stashDataSession(JSON.stringify(productList));
+		stashDataSession("products", productList);
 	};
 	
 	const deleteItem = (e) => {
 		const newArr = productList.filter(item => item.name !== e.target.name);
 		setProductList(productList => newArr);
-		stashDataSession(JSON.stringify(newArr));
+		stashDataSession("products", newArr);
 	};
 	
 	const deleteItemFromStorage = (e) => {
 		const newArr = productList.filter(item => item.name !== e.target.name);
 		setProductList(productList => newArr);
-		stashDataSession(JSON.stringify(newArr));
-		stashDataStorage(JSON.stringify(newArr));
+		stashDataSession("products", newArr);
+		stashDataStorage("products", newArr);
 	};
 	
 	useEffect(() => {
-		stashDataSession(JSON.stringify(productList));
+		stashDataSession("products", productList);
+	}, []);
+	
+	useEffect(() => {
+		stashDataSession("products", productList);
 	}, [productList]);
 	
 	const calculatePriceOfProduct = (price, amount, pack) => {
