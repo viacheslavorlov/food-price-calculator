@@ -1,7 +1,7 @@
-export const stashDataSession = (productArray) => {
-	sessionStorage.setItem("products", productArray);
+export const stashDataSession = (storageName, productArray) => {
+	sessionStorage.setItem(storageName, JSON.stringify(productArray));
 };
 
-export const stashDataStorage = (productArray) => {
-	localStorage.setItem("products", productArray);
+export const stashDataStorage = (storageName, productArray) => {
+	localStorage.setItem(storageName, JSON.stringify(productArray));
 };

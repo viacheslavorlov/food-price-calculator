@@ -7,9 +7,9 @@ const AddNewItem = ({setProductList}) => {
 	const [newItem, setNewItem] = useState({
 		name: '',
 		metric: '',
-		price: 0,
-		pack: 0,
-		amount: 0
+		price: '',
+		pack: '',
+		amount: ''
 	});
 	
 	const setNewItemValue = (e) => {
@@ -20,24 +20,37 @@ const AddNewItem = ({setProductList}) => {
 		}
 	}
 	
-	const addItemToLocalStorage = (e) => {
+	const addItemToLocalStorage = async (e) => {
 		e.preventDefault();
 		if(newItem.name !== '' && newItem.pack !== 0 && newItem.price !== 0 && newItem.metric !== '') {
-			const oldList = JSON.parse(localStorage.getItem('products'));
-			if (oldList.findIndex(item => item.name === newItem.name) !== -1) {
+			const oldList = await JSON.parse(localStorage.getItem('products'));
+			const oldListSession = JSON.parse(sessionStorage.getItem('products'));
+			if (oldList.findIndex(item => item.name === newItem.name) > -1) {
+				alert('Такой продукт уже существует в памяти!');
+				if (oldListSession.findIndex(item => item.name === newItem.name) === -1) {
+					oldListSession.push(newItem);
+					setProductList(oldListSession);
+					stashDataSession("products", oldListSession);
+					setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
+				}
+				return;
+			}
+			
+			if (oldListSession.findIndex(item => item.name === newItem.name) > -1) {
 				alert('Такой продукт уже существует в списке!');
 				setNewItem({name: '', metric: '', price: 0, pack: 0, amount: 0});
 				return;
 			}
+			
 			oldList.push(newItem);
-			setProductList(oldList);
-			stashDataSession(JSON.stringify(oldList));
-			stashDataStorage(JSON.stringify(oldList));
+			oldListSession.push(newItem);
+			setProductList(oldListSession);
+			stashDataSession("products", oldListSession);
+			stashDataStorage("products", oldList);
 			alert(`Добавлен новый продукт: ${newItem.name}`);
-			setNewItem({name: '', metric: '', price: 0, pack: 0, amount: 0});
+			setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
 		}
 	}
-	console.log('new item render');
 	
 	return (
 		<div className={"add-new-item"}>
