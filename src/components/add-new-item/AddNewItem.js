@@ -1,6 +1,6 @@
 import "./AddNewItem.css";
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {stashDataSession, stashDataStorage} from "../../services/localStorageDB";
 
 const AddNewItem = ({setProductList}) => {
@@ -29,7 +29,7 @@ const AddNewItem = ({setProductList}) => {
 				alert('Такой продукт уже существует в памяти!');
 				if (oldListSession.findIndex(item => item.name === newItem.name) === -1) {
 					oldListSession.push(newItem);
-					setProductList(oldListSession);
+					setProductList(() => oldListSession);
 					stashDataSession("products", oldListSession);
 					setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
 				}
@@ -38,19 +38,23 @@ const AddNewItem = ({setProductList}) => {
 			
 			if (oldListSession.findIndex(item => item.name === newItem.name) > -1) {
 				alert('Такой продукт уже существует в списке!');
-				setNewItem({name: '', metric: '', price: 0, pack: 0, amount: 0});
+				setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
 				return;
 			}
 			
 			oldList.push(newItem);
 			oldListSession.push(newItem);
-			setProductList(oldListSession);
+			setProductList(() => oldListSession);
 			stashDataSession("products", oldListSession);
 			stashDataStorage("products", oldList);
 			alert(`Добавлен новый продукт: ${newItem.name}`);
 			setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
 		}
 	}
+	
+	useEffect(() => {
+	
+	}, [newItem])
 	
 	return (
 		<div className={"add-new-item"}>
@@ -65,11 +69,11 @@ const AddNewItem = ({setProductList}) => {
 				</div>
 				
 				<div  className={"add-new-item__form__item"}>Количество в одной пачке: <br/>
-					<input type="number" value={newItem.pack} name="pack" onChange={(e) => setNewItemValue(e)}/>
+					<input type="number" value={newItem.pack} name="pack" min={1} onChange={(e) => setNewItemValue(e)}/>
 				</div>
 				
 				<div  className={"add-new-item__form__item"}>Цена за пачку: <br/>
-					<input type="number" value={newItem.price} name="price" onChange={(e) => setNewItemValue(e)}/>
+					<input type="number" value={newItem.price} name="price"  min={1} onChange={(e) => setNewItemValue(e)}/>
 				</div>
 				
 				<br/>
