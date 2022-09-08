@@ -1,7 +1,7 @@
 export const database = {
   "products": [
     {
-      "name": "яйцо",
+      "name": "неяйцо",
       "metric": "шт",
       "price": 100,
       "pack": 10,
