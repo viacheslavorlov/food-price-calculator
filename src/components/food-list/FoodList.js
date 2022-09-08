@@ -1,5 +1,5 @@
 import "./FoodList.css";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {stashDataSession} from "../../services/localStorageDB";
 import ListElement from "../list-item/ListItem";
 import AddNewItem from "../add-new-item/AddNewItem";
@@ -15,8 +15,8 @@ const FoodList = ({
 	                  deleteItemFromStorage,
 	                  deleteItem
                   }) => {
+	const [listFinal, setListFinal] = useState([]);
 	
-	//
 	useEffect(() => {
 		stashDataSession("products", productList);
 	}, []);
@@ -35,8 +35,8 @@ const FoodList = ({
 	
 	const listFormation = () => {
 		let result;
-		if (sessionStorage.getItem("products")) {
-			result = JSON.parse(sessionStorage.getItem("products")).map((item, index) => {
+		if (listFinal.length > 0) {
+			result = listFinal.map((item, index) => {
 				return <ListElement key={index}
 				                    changeAmount={changeAmount}
 				                    item={item} index={index}
@@ -62,7 +62,7 @@ const FoodList = ({
 		<>
 			<AddNewItem setProductList={setProductList} productList={productList}/>
 			<div className="product_list">
-				<SearchProducts setProductList={setProductList} productList={productList}/>
+				<SearchProducts setProductList={setProductList} productList={productList} listFinal={listFinal} setListFinal={setListFinal}/>
 				<h2 className="product_list__heading">Список продуктов</h2>
 				<ul className="product_list__elements">
 					{list}
