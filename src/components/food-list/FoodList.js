@@ -10,7 +10,7 @@ const FoodList = ({data}) => {
 	const [amount, setAmount] = useState(0);
 	
 	const changeAmount = (e, property) => {
-		setAmount(amount => e.target.value);
+		setAmount(amount => (parseInt(e.target.value)));
 		let indexOfChangedItem = productList.findIndex(item => item.name === e.target.name);
 		const newItem = [...productList].filter(item => item.name === e.target.name);
 		newItem[0] = {...newItem[0], [property]: e.target.value};
@@ -48,6 +48,10 @@ const FoodList = ({data}) => {
 	useEffect(() => {
 		stashDataSession("products", productList);
 	}, [productList]);
+	
+	useEffect(() => {
+		setProductList(list => JSON.parse(sessionStorage.getItem("products")))
+	}, [amount]);
 	
 	const calculatePriceOfProduct = (price, amount, pack) => {
 		return Math.ceil(price * (amount / pack));
