@@ -9,12 +9,12 @@ import SearchProducts from "./components/search-product/SearchProducts";
 
 
 function App() {
-    if (!sessionStorage.getItem("products") || !localStorage.getItem("products")) {
+    if (!localStorage.getItem("products")) {
         stashDataStorage("products", database.products);
     }
     
     // перенос логики из Foodlist
-    const [productList, setProductList] = useState(JSON.parse(sessionStorage.getItem("products")) || JSON.parse(localStorage.getItem("products")));
+    const [productList, setProductList] = useState(JSON.parse(localStorage.getItem("products")));
     const [amount, setAmount] = useState(0);
     console.log(productList);
     
@@ -28,25 +28,26 @@ function App() {
         const oldItemsAfter = [...productList].filter((item, i) => i > indexOfChangedItem);
         
         setProductList(list => [...oldItemsBefore, newItem[0], ...oldItemsAfter]);
-        stashDataSession("products", productList);
+        // stashDataSession("products", productList);
+        return [...oldItemsBefore, newItem[0], ...oldItemsAfter];
     };
     
     const clearAmount = (arr) => {
         setProductList(() => arr.map(item => ({...item, amount: 0})));
         setAmount(0);
-        stashDataSession("products", productList);
+        // stashDataSession("products", productList);
     };
     
     const deleteItem = (e) => {
         const newArr = productList.filter(item => item.name !== e.target.name);
         setProductList(productList => newArr);
-        stashDataSession("products", newArr);
+        // stashDataSession("products", newArr);
     };
     
     const deleteItemFromStorage = (e) => {
         const newArr = productList.filter(item => item.name !== e.target.name);
         setProductList(productList => newArr);
-        stashDataSession("products", newArr);
+        // stashDataSession("products", newArr);
         stashDataStorage("products", newArr);
     };
     

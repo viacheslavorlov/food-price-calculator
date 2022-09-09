@@ -17,17 +17,17 @@ const FoodList = ({
                   }) => {
 	const [listFinal, setListFinal] = useState([]);
 	
-	useEffect(() => {
-		stashDataSession("products", productList);
-	}, []);
+	// useEffect(() => {
+	// 	stashDataSession("products", productList);
+	// }, []);
 
-	useEffect(() => {
-		stashDataSession("products", productList);
-	}, [productList]);
-
-	useEffect(() => {
-		setProductList(list => JSON.parse(sessionStorage.getItem("products")))
-	}, [amount]);
+	// useEffect(() => {
+	// 	stashDataSession("products", productList);
+	// }, [productList]);
+	//
+	// useEffect(() => {
+	// 	setProductList(list => JSON.parse(sessionStorage.getItem("products")))
+	// }, [amount]);
 	
 	const calculatePriceOfProduct = (price, amount, pack) => {
 		return Math.ceil(price * (amount / pack));
