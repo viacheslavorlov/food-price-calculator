@@ -1,9 +1,9 @@
 import "./AddNewItem.css";
 
 import React, {useEffect, useState} from "react";
-import {stashDataSession, stashDataStorage} from "../../services/localStorageDB";
+import {stashDataStorage} from "../../services/localStorageDB";
 
-const AddNewItem = ({setProductList}) => {
+const AddNewItem = ({setProductList, productList}) => {
 	const [newItem, setNewItem] = useState({
 		name: '',
 		metric: '',
@@ -20,35 +20,23 @@ const AddNewItem = ({setProductList}) => {
 		}
 	}
 	
-	const addItemToLocalStorage = async (e) => {
+	const addItemToLocalStorage =  (e) => {
 		e.preventDefault();
 		if(newItem.name !== '' && newItem.pack !== 0 && newItem.price !== 0 && newItem.metric !== '') {
-			const oldList = await JSON.parse(localStorage.getItem('products'));
-			const oldListSession = JSON.parse(sessionStorage.getItem('products'));
-			if (oldList.findIndex(item => item.name === newItem.name) > -1) {
-				alert('Такой продукт уже существует в памяти!');
-				if (oldListSession.findIndex(item => item.name === newItem.name) === -1) {
-					oldListSession.push(newItem);
-					setProductList(() => oldListSession);
-					stashDataSession("products", oldListSession);
-					setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
-				}
-				return;
-			}
+			const oldList = [...productList];
 			
-			if (oldListSession.findIndex(item => item.name === newItem.name) > -1) {
+			if (productList.findIndex(item => item.name === newItem.name) > -1) {
 				alert('Такой продукт уже существует в списке!');
 				setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
 				return;
+			} else {
+				setProductList(() => [...productList, newItem]);
+				alert(`Добавлен новый продукт: ${newItem.name}`);
+				stashDataStorage("products", [...oldList, newItem]);
+				setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
 			}
 			
-			oldList.push(newItem);
-			oldListSession.push(newItem);
-			setProductList(() => oldListSession);
-			stashDataSession("products", oldListSession);
-			stashDataStorage("products", oldList);
-			alert(`Добавлен новый продукт: ${newItem.name}`);
-			setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
+			
 		}
 	}
 	
