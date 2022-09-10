@@ -4,56 +4,49 @@ import {stashDataStorage} from "../../services/localStorageDB";
 import ListElement from "../list-item/ListItem";
 import AddNewItem from "../add-new-item/AddNewItem";
 import SearchProducts from "../search-product/SearchProducts";
+import ErrorBoundaries from "../error-boundaries/ErrorBoundaries";
 
-const FoodList = () => {
-	const [productList, setProductList] = useState(JSON.parse(localStorage.getItem("products")));
+const FoodList = ({productList, setProductList}) => {
+	
 	const [listFinal, setListFinal] = useState([]);
 	const [list, setList] = useState([]);
 	const [amount, setAmount] = useState(0);
 	
 	const changeAmount = (e, property) => {
-		setAmount(amount => (parseInt(e.target.value)));
-		let indexOfChangedItem = productList.findIndex(item => item.name === e.target.name);
-		const newItem = [...productList].filter(item => item.name === e.target.name);
-		newItem[0] = {...newItem[0], [property]: e.target.value};
+		setAmount(e.target.value);
+		let indexOfChangedItem = list.findIndex(item => item.name === e.target.name);
+		const newItem = [...list].filter(item => item.name === e.target.name);
+		newItem[0] = {...newItem[0], [property]: amount};
 		
-		const oldItemsBefore = [...productList].filter((item, i) => i < indexOfChangedItem);
-		const oldItemsAfter = [...productList].filter((item, i) => i > indexOfChangedItem);
+		const oldItemsBefore = [...list].filter((item, i) => i < indexOfChangedItem);
+		console.log("before", oldItemsBefore);
+		const oldItemsAfter = [...list].filter((item, i) => i > indexOfChangedItem);
+		console.log("after", oldItemsAfter);
 		
-		setProductList(list => [...oldItemsBefore, newItem[0], ...oldItemsAfter]);
+		setList(list => [...oldItemsBefore, newItem[0], ...oldItemsAfter]);
 		// stashDataSession("products", productList);
 		return [...oldItemsBefore, newItem[0], ...oldItemsAfter];
 	};
 	
 	const clearAmount = (arr) => {
-		setProductList(() => arr.map(item => ({...item, amount: 0})));
-		setAmount(0);
+		setList((list) => arr.map(item => ({...item, amount: 0})));
+		setAmount(amount => 0);
 		// stashDataSession("products", productList);
 	};
 	
-	const deleteItem = (e) => {
-		const newArr = productList.filter(item => item.name !== e.target.name);
-		setProductList(productList => newArr);
+	const deleteItem = (e, name) => {
+		const newArr = list.filter(item => item.name !== name);
+		setList(productList => newArr);
 		// stashDataSession("products", newArr);
 	};
 	
-	const deleteItemFromStorage = (e) => {
-		const newArr = productList.filter(item => item.name !== e.target.name);
+	const deleteItemFromStorage = (e, name) => {
+		// const newArrProduct = list.filter(item => item.name !== name);
+		// setList(productList => newArrProduct);
+		const newArr = productList.filter(item => item.name !== name);
 		setProductList(productList => newArr);
-		// stashDataSession("products", newArr);
 		stashDataStorage("products", newArr);
 	};
-	
-	
-	useEffect(() => {
-		setList(listFinal);
-	}, []);
-	
-	useEffect(() => {
-		setList(listFinal);
-	}, [amount, listFinal, productList]);
-	
-	
 	
 	
 	const calculatePriceOfProduct = (price, amount, pack) => {
@@ -63,7 +56,7 @@ const FoodList = () => {
 	const listFormation = () => {
 		let result;
 		if (list.length > 0) {
-			result = listFinal.map((item, index) => {
+			result = list.map((item, index) => {
 				return <ListElement key={index}
 				                    changeAmount={changeAmount}
 				                    item={item} index={index}
@@ -78,22 +71,35 @@ const FoodList = () => {
 		return result;
 	};
 	
-	console.log('parced productlist', productList);
+	console.log("parced productlist", productList);
+	console.log("list", list);
 	const listOfProducts = listFormation();
-	const finalPrice = productList.reduce((a, b) => a + calculatePriceOfProduct(b.price, b.amount, b.pack), 0);
+	const finalPrice = list.reduce((a, b) => a + calculatePriceOfProduct(b.price, b.amount, b.pack), 0);
 	// useEffect(() => {
 	// 	changeAmount()
 	// }, [amount])
 	
+	// useEffect(() => {
+	// 	setList(listFinal);
+	// }, []);
+	
+	useEffect(() => {
+		setList(listFinal);
+	}, [amount, listFinal, productList]);
+	
 	return (
 		<>
-			<AddNewItem setProductList={setProductList} productList={productList}/>
 			<div className="product_list">
-				<SearchProducts setProductList={setProductList} productList={productList} listFinal={listFinal} setListFinal={setListFinal}/>
+				<SearchProducts setProductList={setProductList} productList={productList} listFinal={listFinal}
+				                setListFinal={setListFinal}/>
 				<h2 className="product_list__heading">Список продуктов</h2>
+				
 				<ul className="product_list__elements">
-					{listOfProducts}
+					<ErrorBoundaries>
+						{listOfProducts}
+					</ErrorBoundaries>
 				</ul>
+				
 				<div>
 					<h3>Общая стоимость использованных продуктов:<span className="span">_</span> <u>
 						{finalPrice}

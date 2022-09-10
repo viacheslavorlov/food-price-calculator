@@ -1,15 +1,15 @@
 import "./AddNewItem.css";
 
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {stashDataStorage} from "../../services/localStorageDB";
 
 const AddNewItem = ({setProductList, productList}) => {
 	const [newItem, setNewItem] = useState({
 		name: '',
 		metric: '',
-		price: '',
-		pack: '',
-		amount: ''
+		price: 0,
+		pack: 0,
+		amount: 0
 	});
 	
 	const setNewItemValue = (e) => {
@@ -20,29 +20,24 @@ const AddNewItem = ({setProductList, productList}) => {
 		}
 	}
 	
-	const addItemToLocalStorage =  (e) => {
+	const addItemToProductList =  (e) => {
 		e.preventDefault();
 		if(newItem.name !== '' && newItem.pack !== 0 && newItem.price !== 0 && newItem.metric !== '') {
 			const oldList = [...productList];
 			
 			if (productList.findIndex(item => item.name === newItem.name) > -1) {
 				alert('Такой продукт уже существует в списке!');
-				setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
+				setNewItem({name: '', metric: '', price: 0, pack: 0, amount: 0});
 				return;
 			} else {
-				setProductList(() => [...productList, newItem]);
+				setProductList(() => [...oldList, newItem]);
 				alert(`Добавлен новый продукт: ${newItem.name}`);
 				stashDataStorage("products", [...oldList, newItem]);
-				setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
+				setNewItem({name: '', metric: '', price: 0, pack: 0, amount: 0});
 			}
-			
-			
 		}
 	}
 	
-	useEffect(() => {
-	
-	}, [newItem])
 	
 	return (
 		<div className={"add-new-item"}>
@@ -66,7 +61,7 @@ const AddNewItem = ({setProductList, productList}) => {
 				
 				<br/>
 				<br/>
-				<button className={"add-new-item__form__button"} onClick={addItemToLocalStorage}>Добавить продукт</button>
+				<button className={"add-new-item__form__button"} onClick={addItemToProductList}>Добавить продукт</button>
 			</form>
 		</div>
 	);

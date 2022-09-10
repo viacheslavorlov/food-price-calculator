@@ -39,14 +39,14 @@ const ListElement = ({changeAmount, item, calulatePriceOfProduct, deleteItem, de
 				<button
 					className={"product_list__element__buttons__button"}
 					name={item.name}
-					onClick={(e) => deleteItem(e)}>
+					onClick={(e) => deleteItem(e, item.name)}>
 					Удалить
 				</button>
 				<button
 					className={"product_list__element__buttons__button"}
 					style={{backgroundColor: 'black', color: "white"}}
 					name={item.name}
-					onClick={(e) => deleteItemFromStorage(e)}>
+					onClick={(e) => deleteItemFromStorage(e, item.name)}>
 					Удалить из памяти
 				</button>
 			</div>
