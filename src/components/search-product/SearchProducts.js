@@ -7,14 +7,13 @@ const SearchProducts = ({productList, setProductList, listFinal, setListFinal}) 
 	const [activeList, setActiveList] = useState([]);
 	
 	const addItemToStateStorage = (filter) => {
-		const newItem = JSON.parse(localStorage.getItem("products"))
-			.filter(item => item.name.match(filter));
-		console.log('new', newItem);
-		if (activeList.length > 0 && activeList.findIndex(item => item.name = newItem[0].name) === -1) {
-			setListFinal(listFinal => [...listFinal, ...newItem]);
-			console.log(listFinal);
-		}
+		const newItem = [...productList].filter(item => item.name === filter);
+		setListFinal(() => [...listFinal, ...newItem]);
+		console.log("listFinal", listFinal);
+		setFilter(() => "");
+		
 	};
+	
 	
 	const list = activeList.filter(item => item.name.match(filter))
 		.map((item, i) => {
@@ -24,7 +23,6 @@ const SearchProducts = ({productList, setProductList, listFinal, setListFinal}) 
 					<button onClick={
 						(e) => {
 							addItemToStateStorage(item.name);
-							// setListFinal(list => [...list, item]);
 							e.target.parentElement.remove();
 						}
 					}

@@ -8,7 +8,7 @@ const PackageList = () => {
 	if (localStorage.getItem("package") === null) {
 		localStorage.setItem("package", JSON.stringify(database.package));
 	}
-	const [packageList, setPackageList] = useState(JSON.parse(sessionStorage.getItem("package") || localStorage.getItem("package")));
+	const [packageList, setPackageList] = useState(JSON.parse(localStorage.getItem("package")));
 	const [amount, setAmount] = useState(0);
 	
 	const changeAmount = (e, property) => {
@@ -21,25 +21,21 @@ const PackageList = () => {
 		const oldItemsAfter = [...packageList].filter((item, i) => i > indexOfChangedItem);
 		
 		setPackageList(list => [...oldItemsBefore, newItem[0], ...oldItemsAfter]);
-		stashDataSession("package", packageList);
 	};
 	
 	const clearAmount = (arr) => {
 		setPackageList(() => arr.map(item => ({...item, amount: 0})));
 		setAmount(0);
-		stashDataSession("package", packageList);
 	};
 	
 	const deleteItem = (e) => {
 		const newArr = packageList.filter(item => item.name !== e.target.name);
 		setPackageList(packageList => newArr);
-		stashDataSession("package", newArr);
 	};
 	
 	const deleteItemFromStorage = (e) => {
 		const newArr = packageList.filter(item => item.name !== e.target.name);
 		setPackageList(packageList => newArr);
-		stashDataSession("package", newArr);
 		stashDataStorage("package", newArr);
 	};
 	const calculatePriceOfProduct = (price, amount) => {
@@ -55,14 +51,6 @@ const PackageList = () => {
 		                        deleteItemFromStorage={deleteItemFromStorage}
 		/>
 	});
-	
-	useEffect(() => {
-		stashDataSession("package", packageList);
-	}, []);
-	
-	useEffect(() => {
-		stashDataSession("package", packageList);
-	}, [packageList]);
 	
 	return (
 		<>

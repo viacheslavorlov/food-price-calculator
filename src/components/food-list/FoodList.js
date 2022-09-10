@@ -1,6 +1,6 @@
 import "./FoodList.css";
 import {useEffect, useState} from "react";
-import {stashDataStorage} from "../../services/localStorageDB";
+import {stashDataSession, stashDataStorage} from "../../services/localStorageDB";
 import ListElement from "../list-item/ListItem";
 import AddNewItem from "../add-new-item/AddNewItem";
 import SearchProducts from "../search-product/SearchProducts";
@@ -9,23 +9,23 @@ import ErrorBoundaries from "../error-boundaries/ErrorBoundaries";
 const FoodList = ({productList, setProductList}) => {
 	
 	const [listFinal, setListFinal] = useState([]);
-	const [list, setList] = useState([]);
+	const [list, setList] = useState(JSON.parse(sessionStorage.getItem("products")) || []);
 	const [amount, setAmount] = useState(0);
 	
 	const changeAmount = (e, property) => {
-		setAmount(e.target.value);
+		setAmount(amount => parseInt(e.target.value));
 		let indexOfChangedItem = list.findIndex(item => item.name === e.target.name);
-		const newItem = [...list].filter(item => item.name === e.target.name);
-		newItem[0] = {...newItem[0], [property]: amount};
+		let newItem = [...list].filter(item => item.name === e.target.name);
+		const newItemElement = {...newItem[0], [property]: parseInt(e.target.value)};
+		console.log("new item", newItemElement);
 		
 		const oldItemsBefore = [...list].filter((item, i) => i < indexOfChangedItem);
 		console.log("before", oldItemsBefore);
 		const oldItemsAfter = [...list].filter((item, i) => i > indexOfChangedItem);
 		console.log("after", oldItemsAfter);
 		
-		setList(list => [...oldItemsBefore, newItem[0], ...oldItemsAfter]);
-		// stashDataSession("products", productList);
-		return [...oldItemsBefore, newItem[0], ...oldItemsAfter];
+		setList(list => [...oldItemsBefore, newItemElement, ...oldItemsAfter]);
+		stashDataSession("products", list);
 	};
 	
 	const clearAmount = (arr) => {
@@ -85,7 +85,7 @@ const FoodList = ({productList, setProductList}) => {
 	
 	useEffect(() => {
 		setList(listFinal);
-	}, [amount, listFinal, productList]);
+	}, [listFinal, productList]);
 	
 	return (
 		<>
@@ -93,13 +93,11 @@ const FoodList = ({productList, setProductList}) => {
 				<SearchProducts setProductList={setProductList} productList={productList} listFinal={listFinal}
 				                setListFinal={setListFinal}/>
 				<h2 className="product_list__heading">Список продуктов</h2>
-				
-				<ul className="product_list__elements">
-					<ErrorBoundaries>
-						{listOfProducts}
-					</ErrorBoundaries>
-				</ul>
-				
+				<ErrorBoundaries>
+					<ul className="product_list__elements">
+						{listOfProducts ? listOfProducts : <li>Не выбраны продукты</li>}
+					</ul>
+				</ErrorBoundaries>
 				<div>
 					<h3>Общая стоимость использованных продуктов:<span className="span">_</span> <u>
 						{finalPrice}
