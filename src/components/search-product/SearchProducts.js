@@ -13,6 +13,10 @@ const SearchProducts = ({productList, setProductList, listFinal, setListFinal}) 
 		setFilter(() => "");
 		
 	};
+	const deleteItemFromActiveList = (e, name) => {
+		const newArr = activeList.filter(item => item.name !== name);
+		setActiveList(activeList => newArr);
+	}
 	
 	
 	const list = activeList.filter(item => item.name.match(filter))

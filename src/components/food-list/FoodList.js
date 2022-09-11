@@ -62,7 +62,7 @@ const FoodList = ({productList, setProductList}) => {
 				                    item={item} index={index}
 				                    calulatePriceOfProduct={calculatePriceOfProduct}
 				                    deleteItem={deleteItem}
-				                    deleteItemFromStorage={deleteItemFromStorage}
+				                    // deleteItemFromStorage={deleteItemFromStorage}
 				/>;
 			});
 		} else {
