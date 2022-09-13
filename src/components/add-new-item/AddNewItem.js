@@ -1,7 +1,7 @@
 import "./AddNewItem.css";
 
 import React, {useState} from "react";
-import {stashDataStorage} from "../../services/localStorageDB";
+import {stashDataSession, stashDataStorage} from "../../services/localStorageDB";
 
 const AddNewItem = ({setProductList, productList}) => {
 	const [newItem, setNewItem] = useState({
@@ -33,6 +33,7 @@ const AddNewItem = ({setProductList, productList}) => {
 				setProductList(() => [...oldList, newItem]);
 				alert(`Добавлен новый продукт: ${newItem.name}`);
 				stashDataStorage("products", [...oldList, newItem]);
+				// stashDataSession("products", [...sessionStorage.getItem("products"), newItem])
 				setNewItem({name: '', metric: '', price: 0, pack: 0, amount: 0});
 			}
 		}

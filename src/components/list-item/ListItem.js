@@ -3,7 +3,7 @@ import "./ListItem.css";
 const ListElement = ({changeAmount, item, calulatePriceOfProduct, deleteItem, deleteItemFromStorage}) => {
 	
 	return (
-		<li className="product_list__element">
+		<div className="product_list__element">
 			<div className={"product_list__element__inputs"}><b>{item.name.toUpperCase()}</b>, в упаковке: <span className="span">_</span>
 				<input type="number"
 				       min={0}
@@ -51,7 +51,7 @@ const ListElement = ({changeAmount, item, calulatePriceOfProduct, deleteItem, de
 				{/*</button>*/}
 			</div>
 			
-		</li>
+		</div>
 	);
 };
 

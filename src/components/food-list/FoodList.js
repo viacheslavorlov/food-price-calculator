@@ -9,7 +9,7 @@ import ErrorBoundaries from "../error-boundaries/ErrorBoundaries";
 const FoodList = ({productList, setProductList}) => {
 	
 	const [listFinal, setListFinal] = useState([]);
-	const [list, setList] = useState(JSON.parse(sessionStorage.getItem("products")) || []);
+	const [list, setList] = useState([]);
 	const [amount, setAmount] = useState(0);
 	
 	const changeAmount = (e, property) => {
@@ -25,7 +25,7 @@ const FoodList = ({productList, setProductList}) => {
 		console.log("after", oldItemsAfter);
 		
 		setList(list => [...oldItemsBefore, newItemElement, ...oldItemsAfter]);
-		stashDataSession("products", list);
+		// stashDataSession("products", list);
 	};
 	
 	const clearAmount = (arr) => {
@@ -66,7 +66,7 @@ const FoodList = ({productList, setProductList}) => {
 				/>;
 			});
 		} else {
-			result = <li>'Нет выбранных продуктов'</li>;
+			result = <div>'Нет выбранных продуктов'</div>;
 		}
 		return result;
 	};
@@ -94,9 +94,9 @@ const FoodList = ({productList, setProductList}) => {
 				                setListFinal={setListFinal}/>
 				<h2 className="product_list__heading">Список продуктов</h2>
 				<ErrorBoundaries>
-					<ul className="product_list__elements">
-						{listOfProducts ? listOfProducts : <li>Не выбраны продукты</li>}
-					</ul>
+					<div className="product_list__elements">
+						{listOfProducts ? listOfProducts : <div>Не выбраны продукты</div>}
+					</div>
 				</ErrorBoundaries>
 				<div>
 					<h3>Общая стоимость использованных продуктов:<span className="span">_</span> <u>
@@ -104,7 +104,7 @@ const FoodList = ({productList, setProductList}) => {
 					</u>
 					</h3>
 					<button>Сохранить стоимость ингредиентов</button>
-					<button onClick={() => clearAmount(productList)}>Очистить количество ингридиентов</button>
+					<button onClick={() => clearAmount(list)}>Очистить количество ингридиентов</button>
 				</div>
 			</div>
 		</>

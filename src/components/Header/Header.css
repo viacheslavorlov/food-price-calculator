@@ -10,3 +10,19 @@
     margin: 0 auto;
     text-align: center;
 }
+
+.header__navbar {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.header__navbar_link {
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+    padding: 3px;
+}

@@ -1,0 +1,11 @@
+.active-list-element {
+    display: flex;
+    justify-items: flex-start;
+}
+
+.delete-btn-round {
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: red;
+    align-self: flex-end;
+}
