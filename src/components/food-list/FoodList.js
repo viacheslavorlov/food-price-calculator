@@ -85,6 +85,7 @@ const FoodList = ({productList, setProductList}) => {
 	
 	useEffect(() => {
 		setList(listFinal);
+		console.log('list final', listFinal);
 	}, [listFinal, productList]);
 	
 	return (
@@ -95,7 +96,7 @@ const FoodList = ({productList, setProductList}) => {
 				<h2 className="product_list__heading">Список продуктов</h2>
 				<ErrorBoundaries>
 					<div className="product_list__elements">
-						{listOfProducts ? listOfProducts : <div>Не выбраны продукты</div>}
+						{listOfProducts.length ? listOfProducts : <div>Не выбраны продукты</div>}
 					</div>
 				</ErrorBoundaries>
 				<div>
