@@ -7,6 +7,8 @@ import PackageList from "./components/package-list/PackageList";
 import {useEffect, useState} from "react";
 import AddNewItem from "./components/add-new-item/AddNewItem";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Provider} from "react-redux";
+import {store} from "./store/store";
 
 
 function App() {
@@ -23,16 +25,20 @@ function App() {
 	
 	return (
 		<div className="App">
-			<BrowserRouter>
-				<Header/>
-				<div className={"main-container"}>
-					<Routes>
-						<Route path="new-item" element={<AddNewItem setProductList={setProductList} productList={productList}/>}/>
-						<Route path="/" element={<FoodList setProductList={setProductList} productList={productList}/>}/>
-						<Route path="package" element={<PackageList/>}/>
-					</Routes>
-				</div>
-			</BrowserRouter>
+			<Provider store={store}>
+				<BrowserRouter>
+					<Header/>
+					<div className={"main-container"}>
+						<Routes>
+							<Route path="new-item"
+							       element={<AddNewItem setProductList={setProductList} productList={productList}/>}/>
+							<Route path="/"
+							       element={<FoodList setProductList={setProductList} productList={productList}/>}/>
+							<Route path="package" element={<PackageList/>}/>
+						</Routes>
+					</div>
+				</BrowserRouter>
+			</Provider>
 		</div>
 	);
 }
