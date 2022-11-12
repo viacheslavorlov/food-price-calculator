@@ -1,92 +1,56 @@
 import "./SearchProducts.css";
-
 import React, {useEffect, useState} from "react";
-
-
+import {useDispatch} from "react-redux";
 import ErrorBoundary from "../error-boundaries/ErrorBoundaries";
 import {stashDataSession} from "../../services/localStorageDB";
+import {useSelector} from "react-redux";
+import {addToActiveList, filterProducts, deleteFromActiveList, deleteFromFilteredList} from "../../reducer/reducer";
 
-const SearchProducts = ({productList, setProductList, listFinal, setListFinal}) => {
+const SearchProducts = () => {
 	const [filter, setFilter] = useState("");
-	const [activeList, setActiveList] = useState([...productList]);
-	const [filteredList, setFilteredList] = useState([]);
+	const dispatch = useDispatch();
+	const {products, filteredProducts} = useSelector(state => state.reducer);
 	
-	const filterFunction = (list, str) => {
+	const filterFunction = (str) => {
 		if (str.trim()) {
-			setFilteredList(list.filter(item => item.name.includes(str)));
+			dispatch(filterProducts(str));
 		}
-		else setFilteredList(list);
 	};
 	useEffect(() => {
-		filterFunction(activeList, filter)
-	}, [activeList, filter, productList]);
+		filterFunction(filter);
+	}, [filter, products]);
 	
 	
-	const addItemToFinalLIst = (filter) => {
-		const newItem = [...productList].filter(item => item.name.toLowerCase() === filter.toLowerCase());
-		setListFinal(listFinal => [...listFinal, ...newItem]);
-		setFilter('');
-		
-};
-const deleteItemFromActiveList = (name) => {
-	const newArr = activeList.filter(item => item.name !== name);
-	setActiveList(activeList => newArr);
-};
-
-
-const list = filteredList.map((el, i) => {
-		return (
-			<div key={i}>
+	// const deleteItemFromList = (id) => {
+	// 	dispatch(deleteFromFilteredList(id))
+	// };
+	
+	
+	const list = filteredProducts.map((el, i) => {
+		return (<div key={i}>
 				{el.name.toUpperCase()}
-				<button onClick={
-					(e) => {
-						addItemToFinalLIst(el.name.toLowerCase());
-						deleteItemFromActiveList(el.name)
-					}
-				}
+				<button onClick={() => {
+					dispatch(addToActiveList(el.id));
+					dispatch(deleteFromFilteredList(el.id))
+				}}
 				>Добавить
 				</button>
-			</div>
-		);
+			</div>);
 	});
-const content = list || <h1>нет выбранных продуктов</h1>;
-
-useEffect(() => {
-	setActiveList([...productList]);
-}, [productList]);
-
-// useEffect(() => {
-// 	listFormation();
-// }, [listFinal])
-
-return (
-	<div>
-		<input type="search" placeholder="Название продукта" value={filter}
-		       onChange={(e) => setFilter(e.target.value)}/>
-		<ErrorBoundary>
-			{content}
-		</ErrorBoundary>
-	</div>
-);
-}
-;
-
-
-const ActiveListElement = (item, i, addItemToStateStorage) => {
-	return (
-		<div>
-			{item.name.toUpperCase()}
-			<button onClick={
-				(e) => {
-					addItemToStateStorage(item.name);
-					e.target.parentElement.remove();
-				}
-			}
-			>Добавить
-			</button>
-		</div>
-	);
+	const content = list || <h1>нет выбранных продуктов</h1>;
+	
+	useEffect(() => {
+		dispatch(filterProducts(filter))
+	}, [filter]);
+	
+	
+	return (<div>
+			<input type="search" placeholder="Название продукта" value={filter}
+			       onChange={(e) => setFilter(e.target.value)}/>
+			<ErrorBoundary>
+				{content}
+			</ErrorBoundary>
+		</div>);
 };
-
 
 export default SearchProducts;

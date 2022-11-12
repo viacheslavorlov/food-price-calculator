@@ -39,7 +39,7 @@ const ListElement = ({changeAmount, item, calulatePriceOfProduct, deleteItem, de
 				<button
 					className={"product_list__element__buttons__button"}
 					name={item.name}
-					onClick={(e) => deleteItem(e, item.name)}>
+					onClick={() => deleteItem(item.id)}>
 					Удалить
 				</button>
 				{/*<button*/}

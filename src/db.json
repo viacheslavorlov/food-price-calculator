@@ -1,13 +1,16 @@
 {
   "ingredients": [
     {
+      "id": 1,
       "name": "неяйцо",
       "metric": "шт",
       "price": 100,
       "pack": 10,
-      "amount": ""
+      "amount": "",
+      "heeeeeeeee": "asdkfajsdkfja;ksdj"
     },
     {
+      "id": 2,
       "name": "молоко",
       "metric": "мл",
       "price": 80,
@@ -15,6 +18,7 @@
       "amount": ""
     },
     {
+      "id": 3,
       "name": "мука",
       "metric": "г",
       "price": 120,
@@ -22,6 +26,7 @@
       "amount": ""
     },
     {
+      "id": 4,
       "name": "соль",
       "metric": "г",
       "price": 120,
@@ -29,6 +34,7 @@
       "amount": ""
     },
     {
+      "id": 5,
       "name": "сахар",
       "metric": "г",
       "price": 120,
@@ -38,12 +44,14 @@
   ],
   "packages": [
     {
+      "id": 1,
       "name": "коробка",
       "metric": "10x20",
       "price": 20,
       "amount": ""
     },
     {
+      "id": 2,
       "name": "коробка2",
       "metric": "20x30",
       "price": 30,
