@@ -10,12 +10,11 @@ import {Provider} from "react-redux";
 import store from "./store/store";
 
 
-
 function App() {
 	if (localStorage.getItem("package") === null) {
-		localStorage.setItem("package", database.package);
+		stashDataStorage("package", database.packages);
 	}
-	if (!localStorage.getItem("products")) {
+	if (localStorage.getItem("products") === null) {
 		stashDataStorage("products", database.ingredients);
 	}
 	

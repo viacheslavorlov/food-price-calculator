@@ -22,7 +22,7 @@ export const products = createSlice({
 		},
 		addToActiveList: (state, action) => {
 			const singleItem = state.filteredProducts.filter(item => item.id === action.payload)[0];
-			stashDataSession("activeProducts", [...state.activeProducts, singleItem]);
+			state.filteredProducts.filter(item => item.id !== singleItem.id)
 			state.activeProducts.push(singleItem);
 		},
 		deleteFromActiveList: (state, action) => {

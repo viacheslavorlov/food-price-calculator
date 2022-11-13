@@ -5,6 +5,7 @@ import {stashDataSession, stashDataStorage} from "../../services/localStorageDB"
 import {useDispatch, useSelector} from "react-redux";
 import {addNewIngredient} from "../../reducers/productsReducer";
 import {addNewPackage} from "../../reducers/packageReducer";
+import {nanoid} from "@reduxjs/toolkit";
 
 const AddNewItem = () => {
 	
@@ -14,7 +15,8 @@ const AddNewItem = () => {
 		metric: '',
 		price: '',
 		pack: '',
-		amount: ''
+		amount: '',
+		id: ''
 	});
 	const dispatch = useDispatch();
 	
@@ -24,7 +26,9 @@ const AddNewItem = () => {
 	const setNewItemValue = (e) => {
 		if (e.target.value >= 0 || e.target.value) {
 			setNewItem(newItem => ({
-				...newItem, [e.target.name]: e.target.value
+				...newItem,
+				[e.target.name]: e.target.value,
+				id: nanoid()
 			}));
 		}
 	}
@@ -32,28 +36,27 @@ const AddNewItem = () => {
 	const addItemToProductList =  (e) => {
 		e.preventDefault();
 		if(newItem.name !== '' && newItem.pack !== 0 && newItem.price !== 0 && newItem.metric !== '') {
-			const oldList = [...products];
 			if (type === 'products') {
+				const oldList = [...products];
 				if (products.findIndex(item => item.name === newItem.name) > -1) {
 					alert('Такой продукт уже существует в списке!');
-					setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
+					setNewItem({name: '', metric: '', price: '', pack: '', amount: '', id: ''});
 				} else {
 					dispatch(addNewIngredient(newItem));
 					alert(`Добавлен новый продукт: ${newItem.name}`);
 					stashDataStorage('products', [...oldList, newItem]);
-					stashDataSession('products', [...oldList, newItem]);
-					setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
+					setNewItem({name: '', metric: '', price: '', pack: '', amount: '', id: ''});
 				}
 			} else if (type === 'packages') {
+				const oldList = [...packages];
 				if (packages.findIndex(item => item.name === newItem.name) > -1) {
 					alert('Такой продукт уже существует в списке!');
-					setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
+					setNewItem({name: '', metric: '', price: '', pack: '', amount: '', id: ''});
 				} else {
 					dispatch(addNewPackage(newItem));
 					alert(`Добавлен новый продукт: ${newItem.name}`);
-					stashDataStorage('packages', [...oldList, newItem]);
-					stashDataSession('packages', [...oldList, newItem]);
-					setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
+					stashDataStorage('package', [...oldList, newItem]);
+					setNewItem({name: '', metric: '', price: '', pack: '', amount: '', id: ''});
 				}
 			} else {
 				alert('Выберите тип добавляемого: продукт/ингредиент');
@@ -92,7 +95,7 @@ const AddNewItem = () => {
 				
 				<br/>
 				<br/>
-				<button className={"add-new-item__form__button"} onClick={addItemToProductList}>Добавить продукт</button>
+				<button className={"add-new-item__form__button"} onClick={(e) => addItemToProductList(e)}>Добавить продукт</button>
 			</form>
 		</div>
 	);

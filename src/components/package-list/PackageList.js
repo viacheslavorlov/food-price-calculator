@@ -8,9 +8,9 @@ import ErrorBoundaries from "../error-boundaries/ErrorBoundaries";
 import SearchPackages from "./SearchPackages";
 const PackageList = () => {
 	
-	const {activePackage} = useSelector((state) => state.package);
+	const {packages, activePackage} = useSelector((state) => state.package);
 	const dispatch = useDispatch();
-	console.log('products', activePackage);
+	console.log('products', activePackage, packages);
 	// const [amount, setAmount] = useState(0);
 	
 	const changeAmount = (e, property) => {
