@@ -1,7 +1,7 @@
 import "./App.css";
 import Header from "./components/Header/header";
 import FoodList from "./components/food-list/FoodList";
-import * as database from './db.json'
+import database from './db.json'
 import {stashDataStorage} from "./services/localStorageDB";
 import PackageList from "./components/package-list/PackageList";
 import AddNewItem from "./components/add-new-item/AddNewItem";
@@ -10,9 +10,13 @@ import {Provider} from "react-redux";
 import store from "./store/store";
 
 
+
 function App() {
+	if (localStorage.getItem("package") === null) {
+		localStorage.setItem("package", database.package);
+	}
 	if (!localStorage.getItem("products")) {
-		stashDataStorage("products", database.default.ingredients);
+		stashDataStorage("products", database.ingredients);
 	}
 	
 	console.log("render App");

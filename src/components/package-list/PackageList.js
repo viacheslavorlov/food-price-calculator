@@ -1,76 +1,111 @@
-import React, {useEffect, useState} from "react";
-import {database} from "../../database/db";
-import {stashDataSession, stashDataStorage} from "../../services/localStorageDB";
-import PackageListItem from "../package-list-item/PackageListItem";
+import React, {useEffect} from "react";
+import {stashDataSession} from "../../services/localStorageDB";
 import "./PackageList.css";
-
+import {useDispatch, useSelector} from "react-redux";
+import {addNewActiveList, deleteFromActiveList} from "../../reducers/packageReducer";
+import ListElement from "../list-item/ListItem";
+import ErrorBoundaries from "../error-boundaries/ErrorBoundaries";
+import SearchPackages from "./SearchPackages";
 const PackageList = () => {
-	if (localStorage.getItem("package") === null) {
-		localStorage.setItem("package", JSON.stringify(database.package));
-	}
-	const [packageList, setPackageList] = useState(JSON.parse(localStorage.getItem("package")));
-	const [amount, setAmount] = useState(0);
+	
+	const {activePackage} = useSelector((state) => state.package);
+	const dispatch = useDispatch();
+	console.log('products', activePackage);
+	// const [amount, setAmount] = useState(0);
 	
 	const changeAmount = (e, property) => {
-		setAmount(amount => e.target.value);
-		let indexOfChangedItem = packageList.findIndex(item => item.name === e.target.name);
-		const newItem = [...packageList].filter(item => item.name === e.target.name);
-		newItem[0] = {...newItem[0], [property]: e.target.value};
-		
-		const oldItemsBefore = [...packageList].filter((item, i) => i < indexOfChangedItem);
-		const oldItemsAfter = [...packageList].filter((item, i) => i > indexOfChangedItem);
-		
-		setPackageList(list => [...oldItemsBefore, newItem[0], ...oldItemsAfter]);
+		// setAmount(amount => parseInt(e.target.value));
+		if (activePackage.length) {
+			let indexOfChangedItem = activePackage.findIndex(item => item.name === e.target.name);
+			let newItem = [...activePackage].filter(item => item.name === e.target.name);
+			const newItemElement = {...newItem[0], [property]: parseInt(e.target.value)};
+			console.log("new item", newItemElement);
+			
+			const oldItemsBefore = [...activePackage].filter((item, i) => i < indexOfChangedItem);
+			console.log("before", oldItemsBefore);
+			const oldItemsAfter = [...activePackage].filter((item, i) => i > indexOfChangedItem);
+			console.log("after", oldItemsAfter);
+			
+			dispatch(addNewActiveList([...oldItemsBefore, newItemElement, ...oldItemsAfter]));
+			// stashDataSession("products", list);
+		}
 	};
 	
 	const clearAmount = (arr) => {
-		setPackageList(() => arr.map(item => ({...item, amount: 0})));
-		setAmount(0);
+		const clearedList = arr.map(item => ({...item, amount: 0}));
+		// setAmount(amount => 0);
+		dispatch(addNewActiveList(clearedList))
+		stashDataSession("activePackage", clearedList);
 	};
 	
-	const deleteItem = (e) => {
-		const newArr = packageList.filter(item => item.name !== e.target.name);
-		setPackageList(packageList => newArr);
+	const deleteItem = (id) => {
+		dispatch(deleteFromActiveList(id))
 	};
 	
-	const deleteItemFromStorage = (e) => {
-		const newArr = packageList.filter(item => item.name !== e.target.name);
-		setPackageList(packageList => newArr);
-		stashDataStorage("package", newArr);
-	};
-	const calculatePriceOfProduct = (price, amount) => {
-		return price * amount;
-	}
+	// const deleteItemFromStorage = (e, name) => {
+	// 	// const newArrProduct = list.filter(item => item.name !== name);
+	// 	// setList(productList => newArrProduct);
+	// 	const newArr = productList.filter(item => item.name !== name);
+	// 	setProductList(productList => newArr);
+	// 	stashDataStorage("products", newArr);
+	// };
+	//
 	
-	const list = packageList.map((item,index) => {
-		return <PackageListItem key={index}
-		                        changeAmount={changeAmount}
-		                        item={item} index={index}
-		                        calculatePriceOfProduct={calculatePriceOfProduct}
-		                        deleteItem={deleteItem}
-		                        deleteItemFromStorage={deleteItemFromStorage}
-		/>
-	});
+	const calculatePriceOfProduct = (price, amount, pack) => {
+		return Math.ceil(price * (amount / pack));
+	};
+	
+	const listFormation = () => {
+		let result;
+		if (activePackage.length > 0) {
+			result = activePackage.map((item, index) => {
+				return <ListElement key={index}
+				                    changeAmount={changeAmount}
+				                    item={item} index={index}
+				                    calulatePriceOfProduct={calculatePriceOfProduct}
+				                    deleteItem={deleteItem}
+					// deleteItemFromStorage={deleteItemFromStorage}
+				/>;
+			});
+		} else {
+			result = <div>'Нет выбранных продуктов'</div>;
+		}
+		return result;
+	};
+	
+	const listOfProducts = listFormation();
+	const finalPrice = activePackage.reduce((a, b) => a + calculatePriceOfProduct(b.price, b.amount, b.pack), 0);
+	// useEffect(() => {
+	// 	changeAmount()
+	// }, [amount])
+	
+	useEffect(() => {
+		listFormation();
+	}, [activePackage]);
+	
+	
 	
 	return (
 		<>
 			<div className="product_list">
-				<h2 className="product_list__heading">Список упаковок</h2>
-				<ul className="product_list__elements">
-					{list}
-				</ul>
+				<SearchPackages/>
+				<h2 className="product_list__heading">Список продуктов</h2>
+				<ErrorBoundaries>
+					<div className="product_list__elements">
+						{listOfProducts.length ? listOfProducts : <div>Не выбраны продукты</div>}
+					</div>
+				</ErrorBoundaries>
 				<div>
-					<h3>Общая стоимость использованных упаковок:<span className="span">_</span> <u>
-						{packageList
-							.reduce((a, b) => a + calculatePriceOfProduct(b.price, b.amount), 0)}
+					<h3>Общая стоимость использованных продуктов:<span className="span">_</span> <u>
+						{finalPrice}
 					</u>
 					</h3>
-					<button>Сохранить стоимость упаковок</button>
-					<button onClick={() => clearAmount(packageList)}>Очистить количество упаковок</button>
+					<button>Сохранить стоимость ингредиентов</button>
+					<button onClick={() => clearAmount(activePackage)}>Очистить количество ингридиентов</button>
 				</div>
 			</div>
 		</>
-	)
+	);
 };
 
 export default PackageList;

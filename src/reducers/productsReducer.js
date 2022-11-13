@@ -41,14 +41,14 @@ export const products = createSlice({
 	}
 });
 
-const {reducer, actions} = products;
+export const {reducer, actions} = products;
 
 
 
 export const {
 	addNewActiveList, addNewIngredient, addToActiveList, deleteFromActiveList, filterProducts, deleteFromFilteredList,
 } = actions;
-export default reducer;
+
 
 // 		case "ADD_NEW_INGREDIENT":
 // 			const newListOfIngredients = [...state.products, action.payload];

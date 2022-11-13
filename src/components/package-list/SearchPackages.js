@@ -1,23 +1,26 @@
-import "./SearchProducts.css";
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import ErrorBoundary from "../error-boundaries/ErrorBoundaries";
 import {useSelector} from "react-redux";
-import {addToActiveList, filterProducts, deleteFromFilteredList} from "../../reducers/productsReducer";
+import {
+	addToActiveList,
+	filterPackages,
+	deleteFromFilteredList
+} from "../../reducers/packageReducer";
 
-const SearchProducts = () => {
+const SearchPackages = () => {
 	const [filter, setFilter] = useState("");
 	const dispatch = useDispatch();
-	const {products, filteredProducts} = useSelector(state => state.products);
+	const {packages, filteredPackages} = useSelector(state => state.package);
 	
 	const filterFunction = (str) => {
 		if (str.trim()) {
-			dispatch(filterProducts(str));
+			dispatch(filterPackages(str));
 		}
 	};
 	useEffect(() => {
 		filterFunction(filter);
-	}, [filter, products]);
+	}, [filter, packages]);
 	
 	
 	// const deleteItemFromList = (id) => {
@@ -25,12 +28,13 @@ const SearchProducts = () => {
 	// };
 	
 	
-	const list = filteredProducts.map((el, i) => {
-		return (<div key={i}>
+	const list = filteredPackages.map((el, i) => {
+		return (
+			<div key={i}>
 				{el.name.toUpperCase()}
 				<button onClick={() => {
 					dispatch(addToActiveList(el.id));
-					dispatch(deleteFromFilteredList(el.id))
+					dispatch(deleteFromFilteredList(el.id));
 				}}
 				>Добавить
 				</button>
@@ -39,17 +43,17 @@ const SearchProducts = () => {
 	const content = list || <h1>нет выбранных продуктов</h1>;
 	
 	useEffect(() => {
-		dispatch(filterProducts(filter))
+		dispatch(filterPackages(filter));
 	}, [filter]);
 	
 	
 	return (<div>
-			<input type="search" placeholder="Название продукта" value={filter}
-			       onChange={(e) => setFilter(e.target.value)}/>
-			<ErrorBoundary>
-				{content}
-			</ErrorBoundary>
-		</div>);
+		<input type="search" placeholder="Название продукта" value={filter}
+		       onChange={(e) => setFilter(e.target.value)}/>
+		<ErrorBoundary>
+			{content}
+		</ErrorBoundary>
+	</div>);
 };
 
-export default SearchProducts;
+export default SearchPackages;

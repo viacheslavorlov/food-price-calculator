@@ -1,18 +1,18 @@
 import "./FoodList.css";
-import {useEffect, useState} from "react";
-import {stashDataSession, stashDataStorage} from "../../services/localStorageDB";
+import {useEffect} from "react";
+import {stashDataSession} from "../../services/localStorageDB";
 import ListElement from "../list-item/ListItem";
 import SearchProducts from "../search-product/SearchProducts";
 import ErrorBoundaries from "../error-boundaries/ErrorBoundaries";
 import {useDispatch, useSelector} from "react-redux";
-import {addNewActiveList, deleteFromActiveList} from "../../reducer/reducer";
+import {addNewActiveList, deleteFromActiveList} from "../../reducers/productsReducer";
 
 
 const FoodList = () => {
-	const {activeProducts} = useSelector((state) => state.reducer);
+	const {activeProducts} = useSelector((state) => state.products);
 	const dispatch = useDispatch();
 	console.log('products', activeProducts);
-	const [amount, setAmount] = useState(0);
+	// const [amount, setAmount] = useState(0);
 	
 	const changeAmount = (e, property) => {
 		// setAmount(amount => parseInt(e.target.value));
@@ -21,12 +21,12 @@ const FoodList = () => {
 			let newItem = [...activeProducts].filter(item => item.name === e.target.name);
 			const newItemElement = {...newItem[0], [property]: parseInt(e.target.value)};
 			console.log("new item", newItemElement);
-			
+
 			const oldItemsBefore = [...activeProducts].filter((item, i) => i < indexOfChangedItem);
 			console.log("before", oldItemsBefore);
 			const oldItemsAfter = [...activeProducts].filter((item, i) => i > indexOfChangedItem);
 			console.log("after", oldItemsAfter);
-			
+
 			dispatch(addNewActiveList([...oldItemsBefore, newItemElement, ...oldItemsAfter]));
 			// stashDataSession("products", list);
 		}
@@ -34,7 +34,7 @@ const FoodList = () => {
 	
 	const clearAmount = (arr) => {
 		const clearedList = arr.map(item => ({...item, amount: 0}));
-		setAmount(amount => 0);
+		// setAmount(amount => 0);
 		dispatch(addNewActiveList(clearedList))
 		stashDataSession("activeProducts", clearedList);
 	};

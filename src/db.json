@@ -6,8 +6,7 @@
       "metric": "шт",
       "price": 100,
       "pack": 10,
-      "amount": "",
-      "heeeeeeeee": "asdkfajsdkfja;ksdj"
+      "amount": ""
     },
     {
       "id": 2,
@@ -48,6 +47,7 @@
       "name": "коробка",
       "metric": "10x20",
       "price": 20,
+      "pack": 10,
       "amount": ""
     },
     {
@@ -55,6 +55,7 @@
       "name": "коробка2",
       "metric": "20x30",
       "price": 30,
+      "pack": 10,
       "amount": ""
     }
   ],

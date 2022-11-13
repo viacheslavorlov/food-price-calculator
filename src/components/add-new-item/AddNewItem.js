@@ -2,15 +2,24 @@ import "./AddNewItem.css";
 
 import React, {useState} from "react";
 import {stashDataSession, stashDataStorage} from "../../services/localStorageDB";
+import {useDispatch, useSelector} from "react-redux";
+import {addNewIngredient} from "../../reducers/productsReducer";
+import {addNewPackage} from "../../reducers/packageReducer";
 
-const AddNewItem = ({setProductList, productList}) => {
+const AddNewItem = () => {
+	
+	const [type, setType] = useState('');
 	const [newItem, setNewItem] = useState({
 		name: '',
 		metric: '',
-		price: 0,
-		pack: 0,
-		amount: 0
+		price: '',
+		pack: '',
+		amount: ''
 	});
+	const dispatch = useDispatch();
+	
+	const {products} = useSelector(state => state.products);
+	const {packages} = useSelector(state => state.package);
 	
 	const setNewItemValue = (e) => {
 		if (e.target.value >= 0 || e.target.value) {
@@ -23,19 +32,33 @@ const AddNewItem = ({setProductList, productList}) => {
 	const addItemToProductList =  (e) => {
 		e.preventDefault();
 		if(newItem.name !== '' && newItem.pack !== 0 && newItem.price !== 0 && newItem.metric !== '') {
-			const oldList = [...productList];
-			
-			if (productList.findIndex(item => item.name === newItem.name) > -1) {
-				alert('Такой продукт уже существует в списке!');
-				setNewItem({name: '', metric: '', price: 0, pack: 0, amount: 0});
-				return;
+			const oldList = [...products];
+			if (type === 'products') {
+				if (products.findIndex(item => item.name === newItem.name) > -1) {
+					alert('Такой продукт уже существует в списке!');
+					setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
+				} else {
+					dispatch(addNewIngredient(newItem));
+					alert(`Добавлен новый продукт: ${newItem.name}`);
+					stashDataStorage('products', [...oldList, newItem]);
+					stashDataSession('products', [...oldList, newItem]);
+					setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
+				}
+			} else if (type === 'packages') {
+				if (packages.findIndex(item => item.name === newItem.name) > -1) {
+					alert('Такой продукт уже существует в списке!');
+					setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
+				} else {
+					dispatch(addNewPackage(newItem));
+					alert(`Добавлен новый продукт: ${newItem.name}`);
+					stashDataStorage('packages', [...oldList, newItem]);
+					stashDataSession('packages', [...oldList, newItem]);
+					setNewItem({name: '', metric: '', price: '', pack: '', amount: ''});
+				}
 			} else {
-				setProductList(() => [...oldList, newItem]);
-				alert(`Добавлен новый продукт: ${newItem.name}`);
-				stashDataStorage("products", [...oldList, newItem]);
-				// stashDataSession("products", [...sessionStorage.getItem("products"), newItem])
-				setNewItem({name: '', metric: '', price: 0, pack: 0, amount: 0});
+				alert('Выберите тип добавляемого: продукт/ингредиент');
 			}
+			
 		}
 	}
 	
@@ -44,6 +67,13 @@ const AddNewItem = ({setProductList, productList}) => {
 		<div className={"add-new-item"}>
 			<h2 className={"add-new-item__header"}>Добавить новый продукт:</h2>
 			<form className={"add-new-item__form"}>
+				<div>
+					<label htmlFor="type">Продукт или упаковка: </label>
+					<label>Продукт
+					<input onChange={(e)=> setType(e.target.value)} type="radio" name="type" id="product" value="products"/></label>
+					<label>Упаковка
+					<input onChange={(e)=> setType(e.target.value)} type="radio" name="type" id="package" value="packages"/></label>
+				</div>
 				<div className={"add-new-item__form__item"}>Название продукта: <br/>
 					<input type="text" value={newItem.name} name="name" onChange={(e) => setNewItemValue(e)}/>
 				</div>
