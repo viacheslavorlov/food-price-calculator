@@ -11,7 +11,7 @@ import {
 const SearchPackages = () => {
 	const [filter, setFilter] = useState("");
 	const dispatch = useDispatch();
-	const {packages, filteredPackages} = useSelector(state => state.package);
+	const {packages, filteredPackages, activePackage} = useSelector(state => state.package);
 	
 	const filterFunction = (str) => {
 		if (str.trim()) {
@@ -28,13 +28,16 @@ const SearchPackages = () => {
 	// };
 	
 	
-	const list = filteredPackages.map((el, i) => {
+	const list = filteredPackages
+		.filter(item => !activePackage.includes(item))
+		.map((el, i) => {
 		return (
 			<div key={i}>
 				{el.name.toUpperCase()}
 				<button onClick={() => {
 					dispatch(addToActiveList(el.id));
 					dispatch(deleteFromFilteredList(el.id));
+					setFilter('');
 				}}
 				>Добавить
 				</button>

@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import * as basicData from "../db.json";
-import {stashDataStorage, stashDataSession} from "../services/localStorageDB";
+import {stashDataStorage} from "../services/localStorageDB";
 
 
 const initialState = {
@@ -17,12 +17,12 @@ export const packageSlice = createSlice({
 			state.activePackage = action.payload;
 		},
 		addNewPackage: (state, action) => {
-			stashDataStorage("products", [...state.packages     , action.payload]);
+			stashDataStorage("package", [...state.package, action.payload]);
 			state.packages.push(action.payload);
 		},
 		addToActiveList: (state, action) => {
 			const singleItem = state.filteredPackages.filter(item => item.id === action.payload)[0];
-			stashDataSession("activePackage", [...state.activePackage, singleItem]);
+			
 			state.activePackage.push(singleItem);
 		},
 		deleteFromActiveList: (state, action) => {

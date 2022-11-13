@@ -8,7 +8,7 @@ import {addToActiveList, filterProducts, deleteFromFilteredList} from "../../red
 const SearchProducts = () => {
 	const [filter, setFilter] = useState("");
 	const dispatch = useDispatch();
-	const {products, filteredProducts} = useSelector(state => state.products);
+	const {products, filteredProducts, activeProducts} = useSelector(state => state.products);
 	
 	const filterFunction = (str) => {
 		if (str.trim()) {
@@ -25,12 +25,15 @@ const SearchProducts = () => {
 	// };
 	
 	
-	const list = filteredProducts.map((el, i) => {
+	const list = filteredProducts
+		.filter(item => !activeProducts.includes(item))
+		.map((el, i) => {
 		return (<div key={i}>
 				{el.name.toUpperCase()}
 				<button onClick={() => {
 					dispatch(addToActiveList(el.id));
 					dispatch(deleteFromFilteredList(el.id))
+					setFilter('');
 				}}
 				>Добавить
 				</button>
