@@ -72,7 +72,7 @@ const AddNewItem = () => {
 	
 	return (
 		<div className={"add-new-item"}>
-			<h2 className={"add-new-item__header"}>Добавить новый продукт:</h2>
+			<h2 className={"add-new-item__header"}>Добавить новый продукт/упаковку:</h2>
 			<form className={"add-new-item__form"}>
 				<div>
 					<label htmlFor="type">Продукт или упаковка: </label>
