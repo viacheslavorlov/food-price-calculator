@@ -1,18 +1,29 @@
 import "./FoodList.css";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {stashDataSession} from "../../services/localStorageDB";
 import ListElement from "../list-item/ListItem";
 import SearchProducts from "../search-product/SearchProducts";
 import ErrorBoundaries from "../error-boundaries/ErrorBoundaries";
 import {useDispatch, useSelector} from "react-redux";
 import {addNewActiveList, deleteFromActiveList} from "../../reducers/productsReducer";
+import {db} from "../../database/database";
 
 
 const FoodList = () => {
+	const [recipe, setRecipe] = useState('');
 	const {activeProducts} = useSelector((state) => state.products);
 	const dispatch = useDispatch();
 	console.log('products', activeProducts);
 	// const [amount, setAmount] = useState(0);
+	
+	// сохранение рецепта
+	const saveRecipes = (arr) => {
+		db.recipes.add({
+			name: recipe,
+			date: new Date().toLocaleDateString(),
+			components: activeProducts
+		})
+	}
 	
 	const changeAmount = (e, property) => {
 		// setAmount(amount => parseInt(e.target.value));
@@ -101,7 +112,15 @@ const FoodList = () => {
 						{finalPrice}
 					</u>
 					</h3>
-					<button>Сохранить стоимость ингредиентов</button>
+					<input
+						type="text"
+						value={recipe}
+						placeholder="Введите название рецепта"
+						onChange={(e) => setRecipe(e.target.value)}/>
+					<button onClick={() => {
+						saveRecipes(activeProducts);
+						alert('Рецепт добавлен');
+					}}>Сохранить стоимость рецепта</button>
 					<button onClick={() => clearAmount(activeProducts)}>Очистить количество ингридиентов</button>
 				</div>
 			</div>
