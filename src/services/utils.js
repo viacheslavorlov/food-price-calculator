@@ -1,4 +1,5 @@
 export const calculatePriceOfProduct = (price, amount, pack) => {
+	
 	return Math.ceil(price * (amount / pack));
 };
 

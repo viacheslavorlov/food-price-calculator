@@ -98,7 +98,8 @@ const FoodList = () => {
 				</ErrorBoundaries>
 				<div>
 					<h3>Общая стоимость использованных продуктов:<span className="span">_</span> <u>
-						{finalPrice}
+						{Number.isNaN(finalPrice) ?
+							'Введите числовые данные!' : finalPrice}
 					</u>
 					</h3>
 					<button>Сохранить стоимость ингредиентов</button>

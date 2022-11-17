@@ -34,7 +34,12 @@ const ListElement = ({changeAmount, item, calulatePriceOfProduct, deleteItem, de
 					}}
 					name={item.name}/>
 			</div>
-			<div className={"product_list__element__inputs"}>Цена за продукт: <b>{calulatePriceOfProduct(item.price, item.amount, item.pack)} р</b></div>
+			<div className={"product_list__element__inputs"}>Цена за продукт:
+				<b> {
+					Number.isNaN(calulatePriceOfProduct(item.price, item.amount, item.pack)) ?
+						'Введите числовые данные!' : calulatePriceOfProduct(item.price, item.amount, item.pack) + " р"
+				}</b>
+			</div>
 			<div className={"product_list__element__buttons"}>
 				<button
 					className={"product_list__element__buttons__button"}

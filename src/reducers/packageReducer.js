@@ -17,7 +17,7 @@ export const packageSlice = createSlice({
 			state.activePackage = action.payload;
 		},
 		addNewPackage: (state, action) => {
-			stashDataStorage("package", [...state.package, action.payload]);
+			stashDataStorage("package", [...state.packages, action.payload]);
 			state.packages.push(action.payload);
 		},
 		addToActiveList: (state, action) => {
