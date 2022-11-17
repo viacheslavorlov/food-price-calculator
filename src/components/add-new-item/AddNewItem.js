@@ -38,7 +38,7 @@ const AddNewItem = () => {
 		if(obj.name !== '' && obj.pack !== 0 && obj.price !== 0 && obj.metric !== '') {
 			if (type === 'products') {
 				const oldList = [...products];
-				if (products.findIndex(item => item.name === obj.name) > -1) {
+				if (oldList.findIndex(item => item.name === obj.name) > -1) {
 					alert('Такой продукт уже существует в списке!');
 					setNewItem({name: '', metric: '', price: '', pack: '', amount: '', id: ''});
 					return;
