@@ -1,7 +1,7 @@
 {
   "name": "food-price-calculator",
   "version": "0.1.0",
-  "homepage": "https://viacheslavorlov.github.io/food-price-calculator-v2",
+  "homepage": "https://viacheslavorlov.github.io/food-price-calculator",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
