@@ -4,9 +4,9 @@ import {stashDataStorage} from "../services/localStorageDB";
 
 
 const initialState = {
-	packages: JSON.parse(localStorage.getItem("packages")) || basicData.default.packages,
+	packages: JSON.parse(localStorage.getItem("package")) || basicData.default.packages,
 	activePackage: [],
-	filteredPackages: JSON.parse(localStorage.getItem("packages")) || basicData.default.packages
+	filteredPackages: JSON.parse(localStorage.getItem("package")) || basicData.default.packages
 };
 
 export const packageSlice = createSlice({
@@ -17,7 +17,7 @@ export const packageSlice = createSlice({
 			state.activePackage = action.payload;
 		},
 		addNewPackage: (state, action) => {
-			stashDataStorage("package", [...state.packages, action.payload]);
+			stashDataStorage("package", state.packages.push(action.payload));
 			state.packages.push(action.payload);
 		},
 		addToActiveList: (state, action) => {

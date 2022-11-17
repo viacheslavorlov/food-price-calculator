@@ -33,30 +33,34 @@ const AddNewItem = () => {
 		}
 	}
 	
-	const addItemToProductList =  (e) => {
+	const addItemToProductList =  (e, obj) => {
 		e.preventDefault();
-		if(newItem.name !== '' && newItem.pack !== 0 && newItem.price !== 0 && newItem.metric !== '') {
+		if(obj.name !== '' && obj.pack !== 0 && obj.price !== 0 && obj.metric !== '') {
 			if (type === 'products') {
 				const oldList = [...products];
-				if (products.findIndex(item => item.name === newItem.name) > -1) {
+				if (products.findIndex(item => item.name === obj.name) > -1) {
 					alert('Такой продукт уже существует в списке!');
 					setNewItem({name: '', metric: '', price: '', pack: '', amount: '', id: ''});
+					return;
 				} else {
-					dispatch(addNewIngredient(newItem));
-					alert(`Добавлен новый продукт: ${newItem.name}`);
-					stashDataStorage('products', [...oldList, newItem]);
+					dispatch(addNewIngredient(obj));
+					alert(`Добавлен новый продукт: ${obj.name}`);
+					stashDataStorage('products', [...oldList, obj]);
 					setNewItem({name: '', metric: '', price: '', pack: '', amount: '', id: ''});
+					return;
 				}
 			} else if (type === 'packages') {
 				const oldList = [...packages];
-				if (packages.findIndex(item => item.name === newItem.name) > -1) {
+				if (packages.findIndex(item => item.name === obj.name) > -1) {
 					alert('Такой продукт уже существует в списке!');
 					setNewItem({name: '', metric: '', price: '', pack: '', amount: '', id: ''});
+					return;
 				} else {
-					dispatch(addNewPackage(newItem));
-					alert(`Добавлен новый продукт: ${newItem.name}`);
-					stashDataStorage('package', [...oldList, newItem]);
+					dispatch(addNewPackage(obj));
+					alert(`Добавлен новый продукт: ${obj.name}`);
+					stashDataStorage('package', [...oldList, obj]);
 					setNewItem({name: '', metric: '', price: '', pack: '', amount: '', id: ''});
+					return;
 				}
 			} else {
 				alert('Выберите тип добавляемого: продукт/ингредиент');
@@ -95,7 +99,7 @@ const AddNewItem = () => {
 				
 				<br/>
 				<br/>
-				<button className={"add-new-item__form__button"} onClick={(e) => addItemToProductList(e)}>Добавить продукт</button>
+				<button className={"add-new-item__form__button"} onClick={(e) => addItemToProductList(e, newItem)}>Добавить продукт</button>
 			</form>
 		</div>
 	);
