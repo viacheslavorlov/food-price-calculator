@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import * as basicData from "../db.json";
-import {stashDataStorage, stashDataSession} from "../services/localStorageDB";
+import {stashDataStorage} from "../services/localStorageDB";
 
 
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const products = createSlice({
-	name: 'products',
+	name: "products",
 	initialState,
 	reducers: {
 		addNewActiveList: (state, action) => {
@@ -22,17 +22,18 @@ export const products = createSlice({
 		},
 		addToActiveList: (state, action) => {
 			const singleItem = state.filteredProducts.filter(item => item.id === action.payload)[0];
-			state.filteredProducts.filter(item => item.id !== singleItem.id)
+			state.filteredProducts = state.filteredProducts.filter(item => item.id !== singleItem.id);
 			state.activeProducts.push(singleItem);
 		},
 		deleteFromActiveList: (state, action) => {
 			state.activeProducts = state.activeProducts.filter(item => item.id !== action.payload);
+			// state.filteredProducts.push(...state.activeProducts.filter(item => item.id !== action.payload))
 		},
 		filterProducts: (state, action) => {
 			if (action.payload) {
 				state.filteredProducts = state.products.filter(item => item.name.includes(action.payload));
 			} else {
-				state.filteredProducts = state.products
+				state.filteredProducts = state.products;
 			}
 		},
 		deleteFromFilteredList: (state, action) => {
@@ -42,7 +43,6 @@ export const products = createSlice({
 });
 
 export const {reducer, actions} = products;
-
 
 
 export const {

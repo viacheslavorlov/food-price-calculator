@@ -8,6 +8,7 @@ import AddNewItem from "./components/add-new-item/AddNewItem";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./store/store";
+import Outcome from "./components/income-outcome/Ouncome";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
 							       element={<FoodList/>}/>
 							<Route path="package" element={<PackageList/>}/>
 						</Routes>
+						<Outcome/>
 					</div>
 				</BrowserRouter>
 			</div>
