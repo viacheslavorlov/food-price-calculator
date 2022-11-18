@@ -1,6 +1,6 @@
 import "./ListItem.css";
 
-const ListElement = ({changeAmount, item, calulatePriceOfProduct, deleteItem, deleteItemFromStorage}) => {
+const ListElement = ({changeAmount, item, calulatePriceOfProduct, deleteItem}) => {
 	
 	return (
 		<div className="product_list__element">

@@ -11,42 +11,41 @@ const SearchProducts = () => {
 	const {products, filteredProducts, activeProducts} = useSelector(state => state.products);
 	
 	const filterFunction = (str) => {
-		if (str.trim()) {
-			dispatch(filterProducts(str));
-		}
+		dispatch(filterProducts(str.toLowerCase().trim()));
 	};
+	
 	useEffect(() => {
 		filterFunction(filter);
-	}, [filter, products]);
+	}, [filter, products, activeProducts]);
 	
-	
+	useEffect(() => {
+		filterFunction(filter);
+	}, []);
 	// const deleteItemFromList = (id) => {
 	// 	dispatch(deleteFromFilteredList(id))
 	// };
 	
 	
 	const list = filteredProducts
-		.filter(item => !activeProducts.includes(item))
+		.filter(item => activeProducts.filter(el => el.name !== item.name))
 		.map((el, i) => {
-		return (<div key={i}>
+			return (<div key={i}>
 				{el.name.toUpperCase()}
 				<button onClick={() => {
 					dispatch(addToActiveList(el.id));
-					dispatch(deleteFromFilteredList(el.id))
-					setFilter('');
+					dispatch(deleteFromFilteredList(el.id));
+					setFilter("");
 				}}
 				>Добавить
 				</button>
 			</div>);
-	});
+		});
 	const content = list || <h1>нет выбранных продуктов</h1>;
 	
-	useEffect(() => {
-		dispatch(filterProducts(filter))
-	}, [filter]);
 	
-	
-	return (<div>
+	return (
+		<div>
+			<h3>Поиск продуктов</h3>
 			<input type="search" placeholder="Название продукта" value={filter}
 			       onChange={(e) => setFilter(e.target.value)}/>
 			<ErrorBoundary>

@@ -30,14 +30,18 @@ export const products = createSlice({
 			// state.filteredProducts.push(...state.activeProducts.filter(item => item.id !== action.payload))
 		},
 		filterProducts: (state, action) => {
-			if (action.payload) {
-				state.filteredProducts = state.products.filter(item => item.name.includes(action.payload));
+			if (action.payload !== '') {
+				state.filteredProducts = state.products.filter(item => item.name.includes(action.payload) &&
+					state.activeProducts.every(el => el.name !==item.name));
 			} else {
-				state.filteredProducts = state.products;
+				state.filteredProducts = state.products.filter(item => state.activeProducts.every(el => el.name !==item.name))
 			}
 		},
 		deleteFromFilteredList: (state, action) => {
 			state.filteredProducts = state.filteredProducts.filter(item => item.id !== action.payload);
+		},
+		addToFilteredList: (state, action) => {
+			state.filteredProducts.push(action.payload);
 		}
 	}
 });
@@ -46,7 +50,7 @@ export const {reducer, actions} = products;
 
 
 export const {
-	addNewActiveList, addNewIngredient, addToActiveList, deleteFromActiveList, filterProducts, deleteFromFilteredList,
+	addToFilteredList, addNewActiveList, addNewIngredient, addToActiveList, deleteFromActiveList, filterProducts, deleteFromFilteredList,
 } = actions;
 
 

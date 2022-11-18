@@ -5,8 +5,9 @@ import ListElement from "../list-item/ListItem";
 import SearchProducts from "../search-product/SearchProducts";
 import ErrorBoundaries from "../error-boundaries/ErrorBoundaries";
 import {useDispatch, useSelector} from "react-redux";
-import {addNewActiveList, deleteFromActiveList} from "../../reducers/productsReducer";
+import {addNewActiveList, addToFilteredList, deleteFromActiveList, products} from "../../reducers/productsReducer";
 import {db} from "../../database/database";
+import Recipes from "./Recipes";
 
 
 const FoodList = () => {
@@ -52,6 +53,7 @@ const FoodList = () => {
 	
 	const deleteItem = (id) => {
 		dispatch(deleteFromActiveList(id))
+		dispatch(addToFilteredList(activeProducts.filter(item => item.id === id)[0]))
 	};
 	
 	// const deleteItemFromStorage = (e, name) => {
@@ -100,6 +102,8 @@ const FoodList = () => {
 	return (
 		<>
 			<div className="product_list">
+				<Recipes/>
+				<hr/>
 				<SearchProducts/>
 				<h2 className="product_list__heading">Список продуктов</h2>
 				<ErrorBoundaries>
