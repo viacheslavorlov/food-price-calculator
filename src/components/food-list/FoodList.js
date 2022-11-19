@@ -5,9 +5,10 @@ import ListElement from "../list-item/ListItem";
 import SearchProducts from "../search-product/SearchProducts";
 import ErrorBoundaries from "../error-boundaries/ErrorBoundaries";
 import {useDispatch, useSelector} from "react-redux";
-import {addNewActiveList, addToFilteredList, deleteFromActiveList, products} from "../../reducers/productsReducer";
+import {addNewActiveList, addToFilteredList, deleteFromActiveList} from "../../reducers/productsReducer";
 import {db} from "../../database/database";
 import Recipes from "./Recipes";
+import {calculatePriceOfProduct, finalPrice} from "../../services/utils";
 
 
 const FoodList = () => {
@@ -18,12 +19,12 @@ const FoodList = () => {
 	// const [amount, setAmount] = useState(0);
 	
 	// сохранение рецепта
-	const saveRecipes = (arr) => {
+	const saveRecipes = () => {
 		db.recipes.add({
 			name: recipe,
 			date: new Date().toLocaleDateString(),
 			components: activeProducts
-		})
+		});
 	}
 	
 	const changeAmount = (e, property) => {
@@ -65,9 +66,7 @@ const FoodList = () => {
 	// };
 	//
 	
-	const calculatePriceOfProduct = (price, amount, pack) => {
-		return Math.ceil(price * (amount / pack));
-	};
+	
 	
 	const listFormation = () => {
 		let result;
@@ -88,7 +87,6 @@ const FoodList = () => {
 	};
 	
 	const listOfProducts = listFormation();
-	const finalPrice = activeProducts.reduce((a, b) => a + calculatePriceOfProduct(b.price, b.amount, b.pack), 0);
 	// useEffect(() => {
 	// 	changeAmount()
 	// }, [amount])
@@ -125,6 +123,7 @@ const FoodList = () => {
 					<button onClick={() => {
 						saveRecipes(activeProducts);
 						alert('Рецепт добавлен');
+						setRecipe('');
 					}}>Сохранить стоимость рецепта</button>
 					<button onClick={() => clearAmount(activeProducts)}>Очистить количество ингридиентов</button>
 				</div>

@@ -1,6 +1,7 @@
 import "./ListItem.css";
+import {calculatePriceOfProduct} from "../../services/utils";
 
-const ListElement = ({changeAmount, item, calulatePriceOfProduct, deleteItem}) => {
+const ListElement = ({changeAmount, item, deleteItem}) => {
 	
 	return (
 		<div className="product_list__element">
@@ -36,8 +37,8 @@ const ListElement = ({changeAmount, item, calulatePriceOfProduct, deleteItem}) =
 			</div>
 			<div className={"product_list__element__inputs"}>Цена за продукт:
 				<b> {
-					Number.isNaN(calulatePriceOfProduct(item.price, item.amount, item.pack)) ?
-						'Введите числовые данные!' : calulatePriceOfProduct(item.price, item.amount, item.pack) + " р"
+					Number.isNaN(calculatePriceOfProduct(item.price, item.amount, item.pack)) ?
+						'Введите числовые данные!' : calculatePriceOfProduct(item.price, item.amount, item.pack) + " р"
 				}</b>
 			</div>
 			<div className={"product_list__element__buttons"}>
