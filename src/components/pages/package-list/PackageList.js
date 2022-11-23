@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
-import {stashDataSession} from "../../services/localStorageDB";
+import {stashDataSession} from "../../../services/localStorageDB";
 import "./PackageList.css";
 import {useDispatch, useSelector} from "react-redux";
-import {addNewActiveList, deleteFromActiveList} from "../../reducers/packageReducer";
-import ListElement from "../list-item/ListItem";
-import ErrorBoundaries from "../error-boundaries/ErrorBoundaries";
+import {addNewActiveList, deleteFromActiveList} from "../../../reducers/packageReducer";
+import ListElement from "../../list-item/ListItem";
+import ErrorBoundaries from "../../error-boundaries/ErrorBoundaries";
 import SearchPackages from "./SearchPackages";
 const PackageList = () => {
 	
@@ -88,7 +88,9 @@ const PackageList = () => {
 	return (
 		<>
 			<div className="product_list">
-				<SearchPackages/>
+				<SearchPackages buttonName={"Добавить"}
+								type={"packages"}
+								deleteOrAdd={"add"}/>
 				<h2 className="product_list__heading">Список продуктов</h2>
 				<ErrorBoundaries>
 					<div className="product_list__elements">

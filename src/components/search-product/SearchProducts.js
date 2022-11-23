@@ -9,7 +9,6 @@ const SearchProducts = () => {
 	const [filter, setFilter] = useState("");
 	const dispatch = useDispatch();
 	const {products, filteredProducts, activeProducts} = useSelector(state => state.products);
-	
 	const filterFunction = (str) => {
 		dispatch(filterProducts(str.toLowerCase().trim()));
 	};
@@ -21,21 +20,20 @@ const SearchProducts = () => {
 	useEffect(() => {
 		filterFunction(filter);
 	}, []);
-	// const deleteItemFromList = (id) => {
-	// 	dispatch(deleteFromFilteredList(id))
-	// };
+	
 	
 	
 	const list = filteredProducts
 		.filter(item => activeProducts.filter(el => el.name !== item.name))
 		.map((el, i) => {
-			return (<div key={i}>
+			return (<div key={i} className={"active-list-element"}>
 				{el.name.toUpperCase()}
 				<button onClick={() => {
 					dispatch(addToActiveList(el.id));
 					dispatch(deleteFromFilteredList(el.id));
 					setFilter("");
 				}}
+				        className={"add-btn-round"}
 				>Добавить
 				</button>
 			</div>);

@@ -11,6 +11,7 @@ const Header = () => {
                 <NavLink className="header__navbar_link" to="new-item">Добавить новый продукт</NavLink>
                 <NavLink className="header__navbar_link" to="/">Список продуктов</NavLink>
                 <NavLink className="header__navbar_link" to="package">Список упаковок</NavLink>
+                <NavLink className="header__navbar_link" to={"delete-item"}>Удаление продуктов</NavLink>
             </nav>
         </div>
     );

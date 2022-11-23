@@ -1,4 +1,4 @@
-.add-new-item {
+.outcome {
     width: 80vw;
     margin: 10px;
     border: 1px solid black;
@@ -6,11 +6,10 @@
     background: rgba(176, 241, 219, 0.55);
 }
 
-.add-new-item__form {
-    display: flex;
-    flex-direction: column;
+.percent__input {
+    width: 40px;
 }
 
-.add-new-item__form__item {
-    margin-bottom: 10px;
+.underline {
+    text-decoration: underline;
 }

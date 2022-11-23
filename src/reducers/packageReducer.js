@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import * as basicData from "../db.json";
-import {stashDataStorage} from "../services/localStorageDB";
+import {deleteFromLocalStorage, stashDataStorage} from "../services/localStorageDB";
 
 
 const initialState = {
@@ -34,9 +34,15 @@ export const packageSlice = createSlice({
 			} else {
 				state.filteredPackages = state.packages;
 			}
-		},
-		deleteFromFilteredList: (state, action) => {
 			state.filteredPackages = state.filteredPackages.filter(item => item.id !== action.payload);
+		},
+		// deleteFromFilteredList: (state, action) => {
+		// 	state.filteredPackages = state.filteredPackages.filter(item => item.id !== action.payload);
+		// },
+		deleteFromPackages: (state, action) => {
+			state.packages = state.packages.filter(item => item.id !== action.payload);
+			state.filteredPackages = state.filteredPackages.filter(item => item.id !== action.payload);
+			deleteFromLocalStorage("package", action.payload)
 		}
 	}
 });
@@ -49,5 +55,6 @@ export const {
 	addNewPackage,
 	addToActiveList,
 	deleteFromFilteredList,
-	filterPackages
+	filterPackages,
+	deleteFromPackages
 } = actions;

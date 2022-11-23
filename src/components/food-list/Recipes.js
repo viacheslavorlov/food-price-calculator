@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useLiveQuery} from "dexie-react-hooks";
 import {db} from "../../database/database";
 
-import {addNewActiveList, addToActiveList, deleteFromFilteredList} from "../../reducers/productsReducer";
+import {addNewActiveList, deleteFromFilteredList} from "../../reducers/productsReducer";
 import {useDispatch} from "react-redux";
 
 const Recipes = () => {
@@ -11,7 +11,6 @@ const Recipes = () => {
 	
 	const addRecipe = async (id) => {
 		const rec = await db.recipes.where('id').equals(id).toArray();
-		console.log(rec[0]);
 		dispatch(addNewActiveList(rec[0].components))
 		rec[0].components.forEach(item => dispatch(deleteFromFilteredList(item.id)))
 	}
@@ -22,9 +21,15 @@ const Recipes = () => {
 			if (!recipes) return null;
 			return recipes.map(item => {
 				return (
-					<li key={item.id}>
+					<li
+						className={"active-list-element"}
+						key={item.id}>
 						{item.name}
-						<button onClick={() => addRecipe(item.id)}>Выбрать</button>
+						<button
+							className={"add-btn-round"}
+							onClick={() => addRecipe(item.id)}>
+							Выбрать
+						</button>
 					</li>
 				)
 			});

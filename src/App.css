@@ -22,7 +22,7 @@ input {
 
 .main-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-content: space-between;
     margin: 0 auto;
     /*justify-content: space-between;*/

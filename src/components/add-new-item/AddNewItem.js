@@ -1,7 +1,7 @@
 import "./AddNewItem.css";
 
 import React, {useState} from "react";
-import {stashDataSession, stashDataStorage} from "../../services/localStorageDB";
+import {stashDataStorage} from "../../services/localStorageDB";
 import {useDispatch, useSelector} from "react-redux";
 import {addNewIngredient} from "../../reducers/productsReducer";
 import {addNewPackage} from "../../reducers/packageReducer";
@@ -69,20 +69,19 @@ const AddNewItem = () => {
 		}
 	}
 	
-	
 	return (
 		<div className={"add-new-item"}>
 			<h2 className={"add-new-item__header"}>Добавить новый продукт/упаковку:</h2>
 			<form className={"add-new-item__form"}>
-				<div>
-					<label htmlFor="type">Продукт или упаковка: </label>
+				<div className={"add-new-item__form__item"}>
+					<div>Продукт или упаковка: </div>
 					<label>Продукт
-					<input onChange={(e)=> setType(e.target.value)} type="radio" name="type" id="product" value="products"/></label>
+					<input required onChange={(e)=> setType(e.target.value)} type="radio" name="type" id="product" value="products"/></label>
 					<label>Упаковка
-					<input onChange={(e)=> setType(e.target.value)} type="radio" name="type" id="package" value="packages"/></label>
+					<input required onChange={(e)=> setType(e.target.value)} type="radio" name="type" id="package" value="packages"/></label>
 				</div>
 				<div className={"add-new-item__form__item"}>Название продукта: <br/>
-					<input type="text" value={newItem.name} name="name" onChange={(e) => setNewItemValue(e)}/>
+					<input required type="text" value={newItem.name} name="name" onChange={(e) => setNewItemValue(e)}/>
 				</div>
 				
 				<div className={"add-new-item__form__item"}>Единицы измерения: <br/>

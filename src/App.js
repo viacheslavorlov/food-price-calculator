@@ -1,14 +1,15 @@
 import "./App.css";
 import Header from "./components/Header/header";
-import FoodList from "./components/food-list/FoodList";
 import database from './db.json'
 import {stashDataStorage} from "./services/localStorageDB";
-import PackageList from "./components/package-list/PackageList";
-import AddNewItem from "./components/add-new-item/AddNewItem";
+import PackageList from "./components/pages/package-list/PackageList";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./store/store";
 import Outcome from "./components/income-outcome/Ouncome";
+import Main from "./components/pages/Main";
+import AddOns from "./components/pages/AddOns";
+import DeleteItems from "./components/delete-items/DeleteItems";
 
 
 function App() {
@@ -29,10 +30,13 @@ function App() {
 					<div className={"main-container"}>
 						<Routes>
 							<Route path="new-item"
-							       element={<AddNewItem/>}/>
+							       element={<AddOns/>}/>
 							<Route path="/"
-							       element={<FoodList/>}/>
-							<Route path="package" element={<PackageList/>}/>
+							       element={<Main/>}/>
+							<Route path="package"
+							       element={<PackageList/>}/>
+							<Route path={"delete-item"}
+							       element={<DeleteItems/>}/>
 						</Routes>
 						<Outcome/>
 					</div>

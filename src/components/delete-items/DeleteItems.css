@@ -1,16 +1,7 @@
-.add-new-item {
+.delete__items {
     width: 80vw;
     margin: 10px;
     border: 1px solid black;
     border-radius: 20px; padding: 15px;
     background: rgba(176, 241, 219, 0.55);
-}
-
-.add-new-item__form {
-    display: flex;
-    flex-direction: column;
-}
-
-.add-new-item__form__item {
-    margin-bottom: 10px;
 }

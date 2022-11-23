@@ -87,15 +87,10 @@ const FoodList = () => {
 	};
 	
 	const listOfProducts = listFormation();
-	// useEffect(() => {
-	// 	changeAmount()
-	// }, [amount])
 	
 	useEffect(() => {
 		listFormation();
 	}, [activeProducts]);
-	
-	
 	
 	return (
 		<>
@@ -110,10 +105,8 @@ const FoodList = () => {
 					</div>
 				</ErrorBoundaries>
 				<div>
-					<h3>Общая стоимость использованных продуктов:<span className="span">_</span> <u>
-						{Number.isNaN(finalPrice) ?
-							'Введите числовые данные!' : finalPrice}
-					</u>
+					<h3>Общая стоимость использованных продуктов:<span className="span">_</span>
+						{Number.isNaN(finalPrice(activeProducts)) ? 'Введите числовые данные!' : finalPrice(activeProducts)}
 					</h3>
 					<input
 						type="text"
