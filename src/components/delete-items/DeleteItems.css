@@ -1,7 +1,24 @@
 .delete__items {
     width: 80vw;
-    margin: 10px;
+    margin: 0 auto;
     border: 1px solid black;
     border-radius: 20px; padding: 15px;
     background: rgba(176, 241, 219, 0.55);
+}
+.delete__list__item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.add__button {
+    background-color: darkgreen;
+    border-radius: 10px;
+    color: white;
+}
+
+.delete__button {
+    background-color: red;
+    border-radius: 5px;
+    color: white;
 }

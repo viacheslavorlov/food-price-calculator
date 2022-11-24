@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
-import ErrorBoundary from "../../error-boundaries/ErrorBoundaries";
+// import ErrorBoundary from "../../error-boundaries/ErrorBoundaries";
 import {useSelector} from "react-redux";
 
 
@@ -25,9 +25,9 @@ const SearchPackages = ({buttonName, type, deleteOrAdd}) => {
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		activeItems = useSelector(state => state.products.activeProducts);
 	}
-	let filterFunc;
-	let finalFunc;
+	let filterFunc, finalFunc, className;
 	if (deleteOrAdd === "delete") {
+		className = "delete__button";
 		if (type === "packages") {
 			import("../../../reducers/packageReducer")
 				.then(module => {
@@ -43,6 +43,7 @@ const SearchPackages = ({buttonName, type, deleteOrAdd}) => {
 				});
 		}
 	} else if (deleteOrAdd === "add") {
+		className = "add_button";
 		if (type === "packages") {
 			import("../../../reducers/packageReducer")
 				.then(module => {
@@ -52,7 +53,7 @@ const SearchPackages = ({buttonName, type, deleteOrAdd}) => {
 		} else if (type === "products") {
 			import("../../../reducers/productsReducer")
 				.then(module => {
-					finalFunc = module.addToActiveList
+					finalFunc = module.addToActiveList;
 					filterFunc = module.filterProducts;
 				});
 		}
@@ -70,10 +71,12 @@ const SearchPackages = ({buttonName, type, deleteOrAdd}) => {
 	
 	const ButtonTyped = ({func, elem}) => {
 		return (
-			<button onClick={() => {
-				func(elem.id);
-				setFilter("");
-			}}
+			<button
+				onClick={() => {
+					func(elem.id);
+					setFilter("");
+				}}
+				className={className}
 			>{buttonName}
 			</button>
 		);
@@ -84,9 +87,10 @@ const SearchPackages = ({buttonName, type, deleteOrAdd}) => {
 		.filter(item => !activeItems.includes(item))
 		.map((el, i) => {
 			return (
-				<div key={i}>
+				<div className={"delete__list__item"} key={i}>
 					{el.name.toUpperCase()}
 					<ButtonTyped
+						className={""}
 						func={() => dispatch(finalFunc(el.id))}
 						elem={el}/>
 				</div>);
@@ -101,9 +105,7 @@ const SearchPackages = ({buttonName, type, deleteOrAdd}) => {
 	return (<div>
 		<input type="search" placeholder="Название продукта" value={filter}
 		       onChange={(e) => setFilter(e.target.value)}/>
-		<ErrorBoundary>
-			{content}
-		</ErrorBoundary>
+		{content}
 	</div>);
 };
 

@@ -1,7 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useLiveQuery} from "dexie-react-hooks";
 import {db} from "../../database/database";
-
 import {addNewActiveList, deleteFromFilteredList} from "../../reducers/productsReducer";
 import {useDispatch} from "react-redux";
 
@@ -9,17 +8,22 @@ const Recipes = () => {
 	const [recipeName, setRecipeName] = useState("");
 	const dispatch = useDispatch();
 	
+	const regex = new RegExp(recipeName, 'i')
+	
 	const addRecipe = async (id) => {
-		const rec = await db.recipes.where('id').equals(id).toArray();
-		dispatch(addNewActiveList(rec[0].components))
-		rec[0].components.forEach(item => dispatch(deleteFromFilteredList(item.id)))
-	}
+		const rec = await db.recipes.where("id").equals(id).toArray();
+		dispatch(addNewActiveList(rec[0].components));
+		rec[0].components.forEach(item => dispatch(deleteFromFilteredList(item.id)));
+	};
 	
 	const list = useLiveQuery(
 		async () => {
-			const recipes = await db.recipes.toArray();
-			if (!recipes) return null;
-			return recipes.map(item => {
+			return await db.recipes.toArray();
+		});
+	const listFormation = (arr) => {
+		if (!arr || arr.length === 0) return null;
+		return arr.filter(el => regex.test(el.name))
+			.map(item => {
 				return (
 					<li
 						className={"active-list-element"}
@@ -31,10 +35,13 @@ const Recipes = () => {
 							Выбрать
 						</button>
 					</li>
-				)
+				);
 			});
-		}
-	);
+	};
+	
+	useEffect(() => {
+		listFormation(list)
+	});
 	
 	return (
 		<>
@@ -42,7 +49,7 @@ const Recipes = () => {
 			<div>
 				<input type="text" value={recipeName} onChange={(e) => setRecipeName(e.target.value)}/>
 				<div>
-					{list}
+					{listFormation(list)}
 				</div>
 			</div>
 		

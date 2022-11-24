@@ -2,7 +2,7 @@
   "ingredients": [
     {
       "id": 1,
-      "name": "неяйцо",
+      "name": "яйцо",
       "metric": "шт",
       "price": 100,
       "pack": 10,

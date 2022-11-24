@@ -106,7 +106,8 @@ const FoodList = () => {
 				</ErrorBoundaries>
 				<div>
 					<h3>Общая стоимость использованных продуктов:<span className="span">_</span>
-						{Number.isNaN(finalPrice(activeProducts)) ? 'Введите числовые данные!' : finalPrice(activeProducts)}
+						{Number.isNaN(finalPrice(activeProducts)) ?
+							'Введите числовые данные!' : finalPrice(activeProducts).toFixed(2)}
 					</h3>
 					<input
 						type="text"
