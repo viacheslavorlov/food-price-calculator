@@ -28,3 +28,7 @@ input {
     margin: 0 auto;
     /*justify-content: space-between;*/
 }
+
+button {
+    padding: 5px;
+}

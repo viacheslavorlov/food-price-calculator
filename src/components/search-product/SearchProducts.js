@@ -4,14 +4,17 @@ import {useDispatch} from "react-redux";
 import ErrorBoundary from "../error-boundaries/ErrorBoundaries";
 import {useSelector} from "react-redux";
 import {addToActiveList, filterProducts, deleteFromFilteredList} from "../../reducers/productsReducer";
+import {compare, sortingList} from "../../services/utils";
 
 const SearchProducts = () => {
 	const [filter, setFilter] = useState("");
 	const dispatch = useDispatch();
 	const {products, filteredProducts, activeProducts} = useSelector(state => state.products);
+	
 	const filterFunction = (str) => {
 		dispatch(filterProducts(str.toLowerCase().trim()));
 	};
+	
 	
 	useEffect(() => {
 		filterFunction(filter);
@@ -22,8 +25,8 @@ const SearchProducts = () => {
 	}, []);
 	
 	
-	
 	const list = filteredProducts
+		
 		.filter(item => activeProducts.filter(el => el.name !== item.name))
 		.map((el, i) => {
 			return (<div key={i} className={"active-list-element"}>

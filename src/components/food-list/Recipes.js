@@ -3,6 +3,7 @@ import {useLiveQuery} from "dexie-react-hooks";
 import {db} from "../../database/database";
 import {addNewActiveList, deleteFromFilteredList} from "../../reducers/productsReducer";
 import {useDispatch} from "react-redux";
+import {finalPrice} from "../../services/utils";
 
 const Recipes = () => {
 	const [recipeName, setRecipeName] = useState("");
@@ -28,7 +29,11 @@ const Recipes = () => {
 					<li
 						className={"active-list-element"}
 						key={item.id}>
-						{item.name}
+						<b><u>{item.name.toUpperCase()}:</u> {`Цена: ${finalPrice(item.components).toFixed(2)}`}
+							<span className={"span"}>_</span>
+						{`Цена + свет: ${(finalPrice(item.components)* 1.1).toFixed(2)}`}
+						</b>
+						
 						<button
 							className={"add-btn-round"}
 							onClick={() => addRecipe(item.id)}>
@@ -40,7 +45,7 @@ const Recipes = () => {
 	};
 	
 	useEffect(() => {
-		listFormation(list)
+		listFormation(list);
 	});
 	
 	return (

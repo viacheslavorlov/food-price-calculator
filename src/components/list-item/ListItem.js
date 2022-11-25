@@ -8,7 +8,8 @@ const ListElement = ({changeAmount, item, deleteItem}) => {
 			<div className={"product_list__element__inputs"}><b>{item.name.toUpperCase()}</b>, в упаковке: <span
 				className="span">_</span>
 				<input type="number"
-				       min={0}
+				       min="0"
+				       step="0.01"
 				       name={item.name}
 				       value={item.pack}
 				       onChange={(e) => {
@@ -18,6 +19,7 @@ const ListElement = ({changeAmount, item, deleteItem}) => {
 			<div className={"product_list__element__inputs"}>
 				Использованное количество ({item.metric}):<span className="span">_</span>
 				<input
+					step="0.01"
 					type="number"
 					onChange={(e) => {
 						changeAmount(e, "amount");
@@ -29,6 +31,7 @@ const ListElement = ({changeAmount, item, deleteItem}) => {
 			<div className={"product_list__element__inputs"}>
 				Цена за упаковку: <span className="span">_</span>
 				<input
+					step="0.01"
 					type="number"
 					value={item.price}
 					onChange={(e) => {

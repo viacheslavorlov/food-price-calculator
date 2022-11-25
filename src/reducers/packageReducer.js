@@ -4,9 +4,11 @@ import {deleteFromLocalStorage, stashDataStorage} from "../services/localStorage
 
 
 const initialState = {
-	packages: JSON.parse(localStorage.getItem("package")) || basicData.default.packages,
+	packages: (JSON.parse(localStorage.getItem("package")) || basicData.default.packages)
+		.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)),
 	activePackage: [],
-	filteredPackages: JSON.parse(localStorage.getItem("package")) || basicData.default.packages
+	filteredPackages: (JSON.parse(localStorage.getItem("package")) || basicData.default.packages)
+		.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
 };
 
 export const packageSlice = createSlice({

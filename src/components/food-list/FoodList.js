@@ -32,7 +32,7 @@ const FoodList = () => {
 		if (activeProducts.length) {
 			let indexOfChangedItem = activeProducts.findIndex(item => item.name === e.target.name);
 			let newItem = [...activeProducts].filter(item => item.name === e.target.name);
-			const newItemElement = {...newItem[0], [property]: parseInt(e.target.value)};
+			const newItemElement = {...newItem[0], [property]: parseFloat(e.target.value)};
 			console.log("new item", newItemElement);
 
 			const oldItemsBefore = [...activeProducts].filter((item, i) => i < indexOfChangedItem);
