@@ -13,4 +13,11 @@
 
 .add-new-item__form__item {
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.add-new-item__form__item-base__line {
+    justify-self: baseline;
+    transform: translateY(5px);
 }

@@ -4,7 +4,7 @@ import {finalPrice} from "../../services/utils";
 import "./Outcom.css";
 
 const Outcome = () => {
-	const [percent, setPercent] = useState(15);
+	const [percent, setPercent] = useState(25);
 	const {activeProducts} = useSelector(state => state.products);
 	const {activePackage} = useSelector(state => state.package);
 	const productsCost = finalPrice(activeProducts);

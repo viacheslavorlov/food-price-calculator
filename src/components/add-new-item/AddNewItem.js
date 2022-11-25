@@ -74,11 +74,11 @@ const AddNewItem = () => {
 			<h2 className={"add-new-item__header"}>Добавить новый продукт/упаковку:</h2>
 			<form className={"add-new-item__form"}>
 				<div className={"add-new-item__form__item"}>
-					<div>Продукт или упаковка: </div>
+					Продукт или упаковка:
 					<label>Продукт
-					<input required onChange={(e)=> setType(e.target.value)} type="radio" name="type" id="product" value="products"/></label>
+					<input className={"add-new-item__form__item-base__line"} required onChange={(e)=> setType(e.target.value)} type="radio" name="type" id="product" value="products"/></label>
 					<label>Упаковка
-					<input required onChange={(e)=> setType(e.target.value)} type="radio" name="type" id="package" value="packages"/></label>
+					<input className={"add-new-item__form__item-base__line"} required onChange={(e)=> setType(e.target.value)} type="radio" name="type" id="package" value="packages"/></label>
 				</div>
 				<div className={"add-new-item__form__item"}>Название продукта: <br/>
 					<input required type="text" value={newItem.name} name="name" onChange={(e) => setNewItemValue(e)}/>

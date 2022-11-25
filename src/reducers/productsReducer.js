@@ -29,7 +29,7 @@ export const products = createSlice({
 		},
 		deleteFromActiveList: (state, action) => {
 			state.activeProducts = state.activeProducts.filter(item => item.id !== action.payload);
-			// state.filteredProducts.push(...state.activeProducts.filter(item => item.id !== action.payload))
+			// state.filteredProducts.push(...state.activeProducts.filter(item => item.id === action.payload))
 		},
 		filterProducts: (state, action) => {
 			if (action.payload !== '') {

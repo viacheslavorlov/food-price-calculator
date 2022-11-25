@@ -3,8 +3,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import ErrorBoundary from "../error-boundaries/ErrorBoundaries";
 import {useSelector} from "react-redux";
-import {addToActiveList, filterProducts, deleteFromFilteredList} from "../../reducers/productsReducer";
-import {compare, sortingList} from "../../services/utils";
+import {addToActiveList, filterProducts} from "../../reducers/productsReducer";
 
 const SearchProducts = () => {
 	const [filter, setFilter] = useState("");
@@ -33,7 +32,6 @@ const SearchProducts = () => {
 				{el.name.toUpperCase()}
 				<button onClick={() => {
 					dispatch(addToActiveList(el.id));
-					dispatch(deleteFromFilteredList(el.id));
 					setFilter("");
 				}}
 				        className={"add-btn-round"}
