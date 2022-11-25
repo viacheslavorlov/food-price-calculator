@@ -14,7 +14,7 @@ const Outcome = () => {
 	if (Number.isNaN(percent) || percent === '') {
 		costWithPercent = 'Введите процент наценки';
 	} else {
-		costWithPercent = (lightCost * ((100 + Number.parseInt(percent)) / 100))
+		costWithPercent = ((lightCost + packageCost) * ((100 + Number.parseInt(percent)) / 100))
 	}
 	console.log(percent);
 	
