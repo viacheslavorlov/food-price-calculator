@@ -9,6 +9,8 @@
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+    border-bottom: 2px dotted black;
+    /*border-style:  ;*/
 }
 
 .add__button {
@@ -21,4 +23,5 @@
     background-color: red;
     border-radius: 5px;
     color: white;
+    border: 2px solid black;
 }

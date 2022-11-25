@@ -14,12 +14,14 @@ const DeleteItems = () => {
 				<label>Продукты:
 					<input type="radio"
 					       value={"products"}
+					       name="type"
 					       onChange={(e) => setType(e.target.value)}/>
 				</label>
 				<label>
 					Упаковка
 					<input type="radio"
 					       value={"packages"}
+					       name="type"
 					       onChange={(e) => setType(e.target.value)}/>
 				</label>
 				

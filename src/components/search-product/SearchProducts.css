@@ -3,6 +3,7 @@
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 10px;
+    border-bottom: 2px dotted black;
 }
 
 .add-btn-round {
