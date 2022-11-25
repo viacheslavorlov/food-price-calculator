@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/food-price-calculator/static/css/main.81122b1c.css",
-    "main.js": "/food-price-calculator/static/js/main.5793889d.js",
+    "main.css": "/food-price-calculator/static/css/main.66edacc5.css",
+    "main.js": "/food-price-calculator/static/js/main.7591fe2b.js",
     "index.html": "/food-price-calculator/index.html",
-    "main.81122b1c.css.map": "/food-price-calculator/static/css/main.81122b1c.css.map",
-    "main.5793889d.js.map": "/food-price-calculator/static/js/main.5793889d.js.map"
+    "main.66edacc5.css.map": "/food-price-calculator/static/css/main.66edacc5.css.map",
+    "main.7591fe2b.js.map": "/food-price-calculator/static/js/main.7591fe2b.js.map"
   },
   "entrypoints": [
-    "static/css/main.81122b1c.css",
-    "static/js/main.5793889d.js"
+    "static/css/main.66edacc5.css",
+    "static/js/main.7591fe2b.js"
   ]
 }
