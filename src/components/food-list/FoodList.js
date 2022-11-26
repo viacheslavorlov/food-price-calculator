@@ -6,11 +6,11 @@ import SearchProducts from "../search-product/SearchProducts";
 import {useDispatch, useSelector} from "react-redux";
 import {addNewActiveList, addToFilteredList, deleteFromActiveList} from "../../reducers/productsReducer";
 import Recipes from "./Recipes";
-import {calculatePriceOfProduct, finalPrice} from "../../services/utils";
+import {finalPrice} from "../../services/utils";
 import AddRecipes from "./AddRecipes";
 
 const FoodList = () => {
-	const {activeProducts} = useSelector((state) => state.products);
+	const {activeProducts, filteredProducts} = useSelector((state) => state.products);
 	const dispatch = useDispatch();
 	console.log("products", activeProducts);
 	
@@ -49,7 +49,6 @@ const FoodList = () => {
 				return <ListElement key={index}
 				                    changeAmount={changeAmount}
 				                    item={item} index={index}
-				                    calulatePriceOfProduct={calculatePriceOfProduct}
 				                    deleteItem={deleteItem}
 				/>;
 			});
@@ -63,7 +62,7 @@ const FoodList = () => {
 	
 	useEffect(() => {
 		listFormation();
-	}, [activeProducts]);
+	}, [activeProducts, filteredProducts]);
 	
 	return (
 		<>

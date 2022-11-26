@@ -20,6 +20,7 @@ function App() {
 		stashDataStorage("products", database.ingredients);
 	}
 	
+	
 	console.log("render App");
 	
 	return (

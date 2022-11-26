@@ -25,3 +25,12 @@
     color: white;
     border: 2px solid black;
 }
+
+.delete__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.delete__form__radio {
+    transform: translateY(6px);
+}

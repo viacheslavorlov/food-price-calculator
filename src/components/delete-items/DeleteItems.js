@@ -14,13 +14,23 @@ const DeleteItems = () => {
 				<label>Продукты:
 					<input type="radio"
 					       value={"products"}
+					       className="delete__form__radio"
 					       name="type"
 					       onChange={(e) => setType(e.target.value)}/>
 				</label>
 				<label>
-					Упаковка
+					Упаковка:
 					<input type="radio"
 					       value={"packages"}
+					       className="delete__form__radio"
+					       name="type"
+					       onChange={(e) => setType(e.target.value)}/>
+				</label>
+				<label>
+					Рецепты:
+					<input type="radio"
+					       value={"recipes"}
+					       className="delete__form__radio"
 					       name="type"
 					       onChange={(e) => setType(e.target.value)}/>
 				</label>

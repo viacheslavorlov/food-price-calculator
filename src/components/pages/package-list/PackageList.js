@@ -6,8 +6,9 @@ import {addNewActiveList, deleteFromActiveList} from "../../../reducers/packageR
 import ListElement from "../../list-item/ListItem";
 import ErrorBoundaries from "../../error-boundaries/ErrorBoundaries";
 import SearchPackages from "./SearchPackages";
+import {calculatePriceOfProduct, finalPrice} from "../../../services/utils";
+
 const PackageList = () => {
-	
 	const {packages, activePackage} = useSelector((state) => state.package);
 	const dispatch = useDispatch();
 	console.log('products', activePackage, packages);
@@ -51,9 +52,6 @@ const PackageList = () => {
 	// };
 	//
 	
-	const calculatePriceOfProduct = (price, amount, pack) => {
-		return Math.ceil(price * (amount / pack));
-	};
 	
 	const listFormation = () => {
 		let result;
@@ -61,8 +59,7 @@ const PackageList = () => {
 			result = activePackage.map((item, index) => {
 				return <ListElement key={index}
 				                    changeAmount={changeAmount}
-				                    item={item} index={index}
-				                    calulatePriceOfProduct={calculatePriceOfProduct}
+				                    item={item}
 				                    deleteItem={deleteItem}
 					// deleteItemFromStorage={deleteItemFromStorage}
 				/>;
@@ -74,15 +71,14 @@ const PackageList = () => {
 	};
 	
 	const listOfProducts = listFormation();
-	const finalPrice = activePackage.reduce((a, b) => a + calculatePriceOfProduct(b.price, b.amount, b.pack), 0);
+	const totalPrice = finalPrice(activePackage)
 	// useEffect(() => {
 	// 	changeAmount()
 	// }, [amount])
 	
 	useEffect(() => {
 		listFormation();
-	}, [activePackage]);
-	
+	}, [activePackage, packages]);
 	
 	
 	return (
@@ -99,7 +95,7 @@ const PackageList = () => {
 				</ErrorBoundaries>
 				<div>
 					<h3>Общая стоимость использованных продуктов:<span className="span">_</span> <u>
-						{finalPrice}
+						{totalPrice ? totalPrice.toFixed(2) : 'Введите числовые данные!'}
 					</u>
 					</h3>
 					<button>Сохранить стоимость ингредиентов</button>

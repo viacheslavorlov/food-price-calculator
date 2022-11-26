@@ -36,7 +36,7 @@ export const packageSlice = createSlice({
 			} else {
 				state.filteredPackages = state.packages;
 			}
-			state.filteredPackages = state.filteredPackages.filter(item => item.id !== action.payload);
+			// state.filteredPackages = state.filteredPackages.filter(item => item.id !== action.payload);
 		},
 		// deleteFromFilteredList: (state, action) => {
 		// 	state.filteredPackages = state.filteredPackages.filter(item => item.id !== action.payload);
