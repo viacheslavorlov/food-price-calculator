@@ -29,13 +29,13 @@ const SearchPackages = ({buttonName, type, deleteOrAdd}) => {
 	
 	if (type === "packages") {
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		items = useSelector(state => state.package.packages);
+		items = JSON.parse(JSON.stringify(packages))
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		activeItems = useSelector(state => state.package.activePackage);
 	}
 	if (type === "products") {
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		items = useSelector(state => state.products.products);
+		items = JSON.parse(JSON.stringify(products))
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		activeItems = useSelector(state => state.products.activeProducts);
 	}
@@ -99,6 +99,7 @@ const SearchPackages = ({buttonName, type, deleteOrAdd}) => {
 	
 	const list = items
 			.filter(item => !activeItems.includes(item))
+			.filter(item => item.name.includes(filter))
 			.map((el, i) => {
 				return (
 					<div className={"delete__list__item"} key={i}>

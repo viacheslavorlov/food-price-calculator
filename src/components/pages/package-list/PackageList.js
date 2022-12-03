@@ -85,8 +85,11 @@ const PackageList = () => {
 						{totalPrice ? totalPrice.toFixed(2) : 'Введите числовые данные!'}
 					</u>
 					</h3>
-					<button>Сохранить стоимость ингредиентов</button>
-					<button onClick={() => clearAmount(activePackage)}>Очистить количество ингридиентов</button>
+					<button
+						className="delete__button"
+						onClick={() => clearAmount(activePackage)}>
+						Очистить количество ингридиентов
+					</button>
 				</div>
 			</div>
 		</>
