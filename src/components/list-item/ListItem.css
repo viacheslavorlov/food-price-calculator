@@ -16,6 +16,8 @@
 }
 
 .product_list__element__buttons__button {
-    border: 1px solid black;
+    background-color: red;
     border-radius: 5px;
+    color: white;
+    border: 2px solid black;
 }

@@ -1,9 +1,9 @@
 .add-new-item {
-    width: 80vw;
+    width: 90vw;
     margin: 0 auto;
     border: 1px solid black;
     border-radius: 20px; padding: 15px;
-    background: rgba(176, 241, 219, 0.55);
+    background: var(--main-background)
 }
 
 .add-new-item__form {
@@ -20,4 +20,10 @@
 .add-new-item__form__item-base__line {
     justify-self: baseline;
     transform: translateY(5px);
+}
+
+.add-new-item__form__button {
+    border-radius: 5px;
+    background-color: darkgreen;
+    color: white;
 }

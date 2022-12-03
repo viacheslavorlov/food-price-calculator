@@ -1,9 +1,9 @@
 .header {
-    width: 80vw;
-    margin: 10px auto;
+    width: 90vw;
+    margin: 0 auto;
     border: 1px solid black;
     border-radius: 20px; padding: 15px;
-    background: rgba(176, 241, 219, 0.55);
+    background: var(--main-background)
 }
 
 .header__name {
@@ -26,4 +26,13 @@
     margin: 5px;
     text-align: center;
     padding: 3px;
+}
+
+@media screen and (max-width: 890px){
+    .header__name {
+        font-size: 1.4em;
+    }
+    .header__navbar {
+        flex-direction: column;
+    }
 }

@@ -1,9 +1,9 @@
 .product_list {
-    width: 80vw;
+    width: 90vw;
     margin: 0 auto;
     border: 1px solid black;
     border-radius: 20px; padding: 15px;
-    background: rgba(176, 241, 219, 0.55);
+    background: var(--main-background)
 }
 
 .product_list__elements {

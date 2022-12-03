@@ -26,14 +26,14 @@ const DeleteItems = () => {
 					       name="type"
 					       onChange={(e) => setType(e.target.value)}/>
 				</label>
-				<label>
-					Рецепты:
-					<input type="radio"
-					       value={"recipes"}
-					       className="delete__form__radio"
-					       name="type"
-					       onChange={(e) => setType(e.target.value)}/>
-				</label>
+				{/*<label>*/}
+				{/*	Рецепты:*/}
+				{/*	<input type="radio"*/}
+				{/*	       value={"recipes"}*/}
+				{/*	       className="delete__form__radio"*/}
+				{/*	       name="type"*/}
+				{/*	       onChange={(e) => setType(e.target.value)}/>*/}
+				{/*</label>*/}
 				
 				<SearchPackages type={type}
 				                deleteOrAdd={"delete"}

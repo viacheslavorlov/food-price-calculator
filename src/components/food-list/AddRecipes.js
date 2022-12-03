@@ -10,14 +10,14 @@ const AddRecipes = () => {
 	// список рецептов
 	let listOfRecipes = useLiveQuery(
 		() => db.recipes.toArray());
-	console.log("listOfRecipes", listOfRecipes);
+	// console.log("listOfRecipes", listOfRecipes);
 	if (!listOfRecipes) {
 		listOfRecipes = [];
 	}
 	
 	const listOfRecipesNames = listOfRecipes.length !== 0 ?
 		listOfRecipes.map(item => item.name) : [];
-	console.log("listOfRecipesNames", listOfRecipesNames);
+	// console.log("listOfRecipesNames", listOfRecipesNames);
 	
 	// сохранение рецепта
 	const saveRecipes = () => {

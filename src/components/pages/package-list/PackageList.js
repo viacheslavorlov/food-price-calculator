@@ -6,16 +6,15 @@ import {addNewActiveList, deleteFromActiveList} from "../../../reducers/packageR
 import ListElement from "../../list-item/ListItem";
 import ErrorBoundaries from "../../error-boundaries/ErrorBoundaries";
 import SearchPackages from "./SearchPackages";
-import {calculatePriceOfProduct, finalPrice} from "../../../services/utils";
+import {finalPrice} from "../../../services/utils";
 
 const PackageList = () => {
 	const {packages, activePackage} = useSelector((state) => state.package);
 	const dispatch = useDispatch();
-	console.log('products', activePackage, packages);
-	// const [amount, setAmount] = useState(0);
+	// console.log('products', activePackage, packages);
+	
 	
 	const changeAmount = (e, property) => {
-		// setAmount(amount => parseInt(e.target.value));
 		if (activePackage.length) {
 			let indexOfChangedItem = activePackage.findIndex(item => item.name === e.target.name);
 			let newItem = [...activePackage].filter(item => item.name === e.target.name);
@@ -28,7 +27,7 @@ const PackageList = () => {
 			console.log("after", oldItemsAfter);
 			
 			dispatch(addNewActiveList([...oldItemsBefore, newItemElement, ...oldItemsAfter]));
-			// stashDataSession("products", list);
+		
 		}
 	};
 	
@@ -43,15 +42,6 @@ const PackageList = () => {
 		dispatch(deleteFromActiveList(id))
 	};
 	
-	// const deleteItemFromStorage = (e, name) => {
-	// 	// const newArrProduct = list.filter(item => item.name !== name);
-	// 	// setList(productList => newArrProduct);
-	// 	const newArr = productList.filter(item => item.name !== name);
-	// 	setProductList(productList => newArr);
-	// 	stashDataStorage("products", newArr);
-	// };
-	//
-	
 	
 	const listFormation = () => {
 		let result;
@@ -61,7 +51,6 @@ const PackageList = () => {
 				                    changeAmount={changeAmount}
 				                    item={item}
 				                    deleteItem={deleteItem}
-					// deleteItemFromStorage={deleteItemFromStorage}
 				/>;
 			});
 		} else {
@@ -72,9 +61,7 @@ const PackageList = () => {
 	
 	const listOfProducts = listFormation();
 	const totalPrice = finalPrice(activePackage)
-	// useEffect(() => {
-	// 	changeAmount()
-	// }, [amount])
+	
 	
 	useEffect(() => {
 		listFormation();

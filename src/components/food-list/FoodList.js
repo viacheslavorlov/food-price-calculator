@@ -12,7 +12,7 @@ import AddRecipes from "./AddRecipes";
 const FoodList = () => {
 	const {activeProducts, filteredProducts} = useSelector((state) => state.products);
 	const dispatch = useDispatch();
-	console.log("products", activeProducts);
+	// console.log("products", activeProducts);
 	
 	const changeAmount = (e, property) => {
 		if (activeProducts.length) {

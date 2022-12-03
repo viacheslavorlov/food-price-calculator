@@ -1,13 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+
 body {
     margin: 0;
     padding: 0;
-    background: darkgrey;
+    font-family: 'Roboto Slab', serif;
 }
 
 .App {
-    width: 90vw;
+    width: 99vw;
     margin: 0 auto;
-
+    overflow: unset;
 }
 
 .span {
@@ -32,3 +34,4 @@ input {
 button {
     padding: 5px;
 }
+

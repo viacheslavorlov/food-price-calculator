@@ -29,9 +29,9 @@ const Recipes = () => {
 					<li
 						className={"active-list-element"}
 						key={item.id}>
-						<b><u>{item.name.toUpperCase()}:</u> {`Цена: ${finalPrice(item.components).toFixed(2)}`}
+						<b><u>{item.name.toUpperCase()}:</u> {`себестоимость: ${finalPrice(item.components).toFixed(2)}`}
 							<span className={"span"}>_</span>
-						{`Цена + свет: ${(finalPrice(item.components)* 1.1).toFixed(2)}`}
+						{`себестоимость + электричество: ${(finalPrice(item.components)* 1.1).toFixed(2)}`}
 						</b>
 						
 						<button
